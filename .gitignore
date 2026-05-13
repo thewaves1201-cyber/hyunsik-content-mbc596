@@ -1,0 +1,4 @@
+.DS_Store
+Thumbs.db
+*.log
+.n8nac-config.json

@@ -1,0 +1,2046 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>현식 × 596</title>
+<link rel="icon" href="assets/favicon.png" type="image/png" sizes="any">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic:wght@400;700;800&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #FFE030;
+    --pink: #FF5FA0;
+    --blue: #3B82FF;
+    --green: #2ECC71;
+    --orange: #FF8C00;
+    --bg: #F5F0E8;
+    --black: #111;
+    --sticky-top-h: 52px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html {
+    height: 100%;
+    height: -webkit-fill-available;
+  }
+  body {
+    height: 100%;
+    min-height: 100%;
+    min-height: -webkit-fill-available;
+    margin: 0;
+    overflow: hidden;
+    background-color: #e8e0d4;
+    background-image:
+      radial-gradient(ellipse 120% 80% at 10% 20%, rgba(255, 224, 48, 0.22), transparent 50%),
+      radial-gradient(ellipse 90% 60% at 88% 0%, rgba(255, 95, 160, 0.1), transparent 42%),
+      radial-gradient(circle at 70% 85%, rgba(59, 130, 255, 0.08), transparent 38%),
+      repeating-linear-gradient(88deg, transparent 0 13px, rgba(17,17,17,0.018) 13px 14px),
+      repeating-linear-gradient(0deg, transparent 0 17px, rgba(17,17,17,0.014) 17px 18px);
+    color: var(--black);
+    font-family: 'Nanum Gothic', sans-serif;
+  }
+
+  /* 실제 스크롤은 여기서만 (루트 html 스냅은 Safari 등에서 무시되는 경우가 많음) */
+  .snap-scroll {
+    height: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    max-height: 100vh;
+    max-height: 100svh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: var(--sticky-top-h);
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    background: linear-gradient(178deg, #fff45e 0%, var(--yellow) 40%, #ffd738 100%);
+    border-bottom: 4px solid var(--black);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 11px 0 9px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transform: rotate(-0.25deg);
+    transform-origin: center top;
+    box-shadow: 0 5px 0 rgba(0,0,0,0.07);
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 18s linear infinite, marqueeGlow 4s ease-in-out infinite;
+  }
+  .marquee-inner span {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    margin-right: 3rem;
+    display: inline-block;
+  }
+  .marquee-inner span:nth-child(4n+1) {
+    animation: spanWiggleA 2.6s ease-in-out infinite;
+  }
+  .marquee-inner span:nth-child(4n+3) {
+    animation: spanWiggleB 2.9s ease-in-out infinite 0.2s;
+  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes marqueeGlow {
+    0%, 100% { filter: saturate(1) brightness(1); }
+    50% { filter: saturate(1.25) brightness(1.06); }
+  }
+  @keyframes heroDriftA {
+    0%, 100% { transform: rotate(-2.5deg) translate(-7px, 4px); }
+    50% { transform: rotate(-1deg) translate(9px, -15px); }
+  }
+  @keyframes heroDriftB {
+    0%, 100% { transform: rotate(2.7deg) translate(8px, 3px); }
+    50% { transform: rotate(1deg) translate(-10px, -15px); }
+  }
+  @keyframes stickerBob {
+    0%, 100% { transform: rotate(-11deg) translate(6px, -4px); }
+    50% { transform: rotate(-9deg) translate(8px, -7px); }
+  }
+  @keyframes titleLive {
+    0%, 100% {
+      transform: rotate(-1.1deg) scale(1) translateX(-3px);
+      text-shadow: 3px 3px 0 rgba(255,224,48,0.52), -2px 2px 0 rgba(255,95,160,0.18);
+    }
+    50% {
+      transform: rotate(0.9deg) scale(1.04) translateX(4px);
+      text-shadow: 5px 4px 0 rgba(255,224,48,0.6), -4px 3px 0 rgba(255,95,160,0.26);
+    }
+  }
+  @keyframes heroTitleAccent {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-5px) rotate(-1.4deg); }
+  }
+  @keyframes heroTitleAccent2 {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-4px) rotate(1.2deg); }
+  }
+  @keyframes labelPop {
+    0%, 100% { transform: rotate(-1.2deg) scale(1); }
+    50% { transform: rotate(-1.4deg) scale(1.03); }
+  }
+  @keyframes heroBlob {
+    0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.35; }
+    33% { transform: translate(12px, -18px) scale(1.08); opacity: 0.5; }
+    66% { transform: translate(-8px, 10px) scale(0.95); opacity: 0.4; }
+  }
+  @keyframes photoBob {
+    0%, 100% { transform: rotate(1.4deg) translateY(0); }
+    50% { transform: rotate(1.05deg) translateY(-6px); }
+  }
+  @keyframes rowRise {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes quotePulse {
+    0%, 100% { transform: rotate(-0.6deg); box-shadow: 6px 7px 0 rgba(0,0,0,0.1); }
+    50% { transform: rotate(-0.35deg); box-shadow: 8px 9px 0 rgba(255,95,160,0.2), 6px 7px 0 rgba(0,0,0,0.08); }
+  }
+  @keyframes recTilt {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(-5deg) translateY(-2px); }
+  }
+  @keyframes detailGlow {
+    0%, 100% { box-shadow: 4px 5px 0 rgba(0,0,0,0.06); }
+    50% { box-shadow: 5px 6px 0 rgba(59,130,255,0.12), 4px 5px 0 rgba(0,0,0,0.05); }
+  }
+  @keyframes arrowNudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+  }
+  @keyframes spanWiggleA {
+    0%, 100% { transform: rotate(-1.5deg) translateY(1px); }
+    50% { transform: rotate(-2.2deg) translateY(-3px); }
+  }
+  @keyframes spanWiggleB {
+    0%, 100% { transform: rotate(1.2deg) translateY(-2px); }
+    50% { transform: rotate(2deg) translateY(2px); }
+  }
+  @keyframes footerHue {
+    0%, 100% { color: var(--yellow); letter-spacing: 0.12em; }
+    50% { color: #fff4a8; letter-spacing: 0.16em; }
+  }
+  @keyframes cpTitleSkew {
+    0%, 100% { transform: rotate(-0.5deg); }
+    50% { transform: rotate(0.2deg); }
+  }
+  @keyframes panelPeek {
+    from { opacity: 0.75; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes heroHintBreath {
+    0%, 100% { opacity: 0.14; }
+    50% { opacity: 0.22; }
+  }
+  @keyframes heroHintChev {
+    0%, 100% { transform: translateY(0); opacity: 0.35; }
+    50% { transform: translateY(3px); opacity: 0.55; }
+  }
+
+  /* ── PAGE = 뷰포트 − 스티키 마퀴 (스크롤 스냅, 하단 안 잘림) ── */
+  .page {
+    min-height: calc(100vh - var(--sticky-top-h));
+    min-height: calc(100svh - var(--sticky-top-h));
+    border-bottom: 4px solid var(--black);
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: visible;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  /* ── PAGE 1: HERO ── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    position: relative;
+  }
+  .hero-left {
+    background: linear-gradient(165deg, #fff278 0%, var(--yellow) 55%, #f5d020 100%);
+    border-right: 4px solid var(--black);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2.7rem 2.4rem 3.2rem 3.1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    width: min(45vw, 280px);
+    height: min(45vw, 280px);
+    right: -5%;
+    top: 8%;
+    background: radial-gradient(circle, rgba(255,95,160,0.28) 0%, transparent 68%);
+    pointer-events: none;
+    z-index: 0;
+    animation: heroBlob 9s ease-in-out infinite;
+  }
+  .hero-photo-area {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 0.75rem 2.6rem;
+    pointer-events: none;
+  }
+  .hero-photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    align-items: end;
+    justify-items: center;
+    gap: clamp(8px, 1.8vw, 20px);
+    width: 100%;
+    max-width: min(760px, 98%);
+  }
+  .hero-photo-area img.hero-cutout {
+    width: auto;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    object-position: center bottom;
+    filter:
+      drop-shadow(3px 5px 0 rgba(0,0,0,0.07))
+      drop-shadow(-2px 8px 0 rgba(255,95,160,0.12))
+      drop-shadow(8px 12px 20px rgba(0,0,0,0.14));
+  }
+  .hero-photo-area img.hero-cutout--main {
+    max-width: min(56vw, 440px);
+    max-height: min(68vh, 720px);
+  }
+  .hero-photo-area .hero-cutout:nth-child(odd) {
+    animation: heroDriftA 4.3s ease-in-out infinite;
+  }
+  .hero-photo-area .hero-cutout:nth-child(even) {
+    animation: heroDriftB 5.1s ease-in-out infinite 0.48s;
+  }
+  .hero-left-label {
+    position: relative; z-index: 2;
+    background: var(--black); color: var(--yellow);
+    display: inline-block; padding: 7px 16px 5px 12px;
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 13px; letter-spacing: 0.1em; width: fit-content;
+    transform-origin: left center;
+    animation: labelPop 3.2s ease-in-out infinite;
+    box-shadow: 5px 4px 0 rgba(255,95,160,0.35);
+  }
+  .hero-right {
+    padding: 3.6rem 3rem 4.2rem 3.8rem;
+    display: flex; flex-direction: column; justify-content: center;
+    background: linear-gradient(180deg, #faf6ef 0%, var(--bg) 45%, #ebe4d9 100%);
+    position: relative;
+  }
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    width: min(50vw, 320px);
+    height: min(50vw, 320px);
+    left: -4%;
+    top: 12%;
+    background: radial-gradient(circle, rgba(59,130,255,0.14) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+    animation: heroBlob 11s ease-in-out infinite reverse;
+  }
+  .hero-right > *:not(.sticker) {
+    position: relative;
+    z-index: 1;
+  }
+  .sticker {
+    position: absolute;
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 11px; letter-spacing: 0.08em;
+    padding: 7px 13px 5px 11px; border: 3px solid var(--black);
+    animation: stickerBob 3.4s ease-in-out infinite;
+    background: var(--pink); color: var(--black);
+    top: 3.2rem; right: 2.8rem;
+    box-shadow: 4px 5px 0 rgba(0,0,0,0.12);
+    z-index: 2;
+  }
+  .hero-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: clamp(4.4rem, 9vw, 9rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    transform-origin: left center;
+    animation: titleLive 4s ease-in-out infinite;
+  }
+  .hero-title .accent,
+  .hero-title .accent2 {
+    display: inline-block;
+    transform-origin: 50% 92%;
+  }
+  .hero-title .accent {
+    color: var(--pink);
+    animation: heroTitleAccent 2.55s ease-in-out infinite 0.08s;
+  }
+  .hero-title .accent2 {
+    color: var(--blue);
+    animation: heroTitleAccent2 2.85s ease-in-out infinite 0.42s;
+  }
+  .hero-sub {
+    font-size: 15px; font-weight: 700; line-height: 1.8; color: #444;
+    max-width: 380px; margin-bottom: 2.5rem;
+    border-left: 5px dashed var(--black);
+    border-bottom: 2px dotted rgba(0,0,0,0.2);
+    padding: 0.35rem 0 0.6rem 1.1rem;
+    transform: rotate(0.45deg);
+    background: rgba(255,255,255,0.35);
+  }
+  .hero-chips { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; }
+  .chip {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 12px; padding: 6px 14px;
+    border: 3px solid var(--black); background: var(--bg);
+    letter-spacing: 0.05em;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.08);
+  }
+  .chip:nth-child(7n+1) { transform: rotate(-2.8deg); }
+  .chip:nth-child(7n+2) { transform: rotate(1.6deg) translateY(3px); }
+  .chip:nth-child(7n+3) { transform: rotate(-1.1deg); }
+  .chip:nth-child(7n+4) { transform: rotate(2.4deg) translateY(-2px); }
+  .chip:nth-child(7n+5) { transform: rotate(-1.4deg) translateY(2px); }
+  .chip:nth-child(7n+6) { transform: rotate(2deg) translateY(-3px); }
+  .chip:nth-child(7n+7) { transform: rotate(-0.9deg) translateY(1px); }
+  .chip.y { background: var(--yellow); }
+  .chip.p { background: var(--pink); color: #fff; }
+  .chip.b { background: var(--blue); color: #fff; }
+  .chip.g { background: var(--green); color: #fff; }
+  .chip.o { background: var(--orange); color: #fff; }
+
+  /* 히어로 하단 — 아주 옅은 스크롤 힌트 */
+  .hero-scroll-hint {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: max(0.65rem, calc(0.35rem + env(safe-area-inset-bottom, 0px)));
+    z-index: 4;
+    pointer-events: none;
+    text-align: center;
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--black);
+    opacity: 0.2;
+    animation: heroHintBreath 4.2s ease-in-out infinite;
+    mix-blend-mode: multiply;
+  }
+  .hero-scroll-hint__line {
+    display: block;
+    font-weight: 400;
+    margin-top: 0.4rem;
+    margin-bottom: 0;
+    letter-spacing: 0.28em;
+    font-size: 11px;
+  }
+  .hero-scroll-hint__chevs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.05em;
+    font-size: 8px;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+  .hero-scroll-hint__chevs span {
+    display: block;
+    animation: heroHintChev 2.4s ease-in-out infinite;
+    opacity: 0.5;
+  }
+  .hero-scroll-hint__chevs span:nth-child(2) { animation-delay: 0.12s; }
+  .hero-scroll-hint__chevs span:nth-child(3) { animation-delay: 0.24s; }
+
+  /* ── PAGE 2: ARTIST ── */
+  .artist-page {
+    display: grid;
+    grid-template-columns:
+      minmax(152px, 11rem)
+      minmax(248px, min(36vw, 460px))
+      minmax(300px, 1fr);
+    --artist-page-h: calc(100vh - var(--sticky-top-h));
+    --artist-page-h: calc(100dvh - var(--sticky-top-h));
+    height: var(--artist-page-h);
+    min-height: var(--artist-page-h);
+    max-height: var(--artist-page-h);
+    overflow: hidden;
+    align-items: stretch;
+  }
+  .artist-page .artist-label-col {
+    padding: 1.65rem 0.9rem;
+    overflow: hidden;
+  }
+  .artist-label-col {
+    background: linear-gradient(180deg, #5a9dff 0%, var(--blue) 40%, #2868d9 100%);
+    border-right: 4px solid var(--black);
+    display: flex; align-items: center; justify-content: center; padding: 2.5rem;
+    transform: skewY(-1deg);
+    transform-origin: center center;
+  }
+  /* 거꾸로 세로 — 펜 낙서처럼 글자마다 삐뚤게 */
+  .artist-label-scribble {
+    font-family: 'Nanum Pen Script', 'Black Han Sans', cursive;
+    font-size: clamp(2.5rem, 5.2vw, 3.1rem);
+    font-weight: 400;
+    color: #fff;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    letter-spacing: -0.35em;
+    line-height: 0.88;
+    display: block;
+    transform: rotate(177deg) skewX(-2deg) translateX(6px);
+    transform-origin: center center;
+    text-shadow:
+      2px 2px 0 rgba(0,0,0,0.28),
+      -1px 1px 0 rgba(255,255,255,0.12),
+      3px 5px 12px rgba(0,0,0,0.18);
+  }
+  .artist-scribble-char {
+    display: inline-block;
+    position: relative;
+    transform-origin: 50% 55%;
+  }
+  .artist-scribble-char:nth-child(1) {
+    transform: rotate(-14deg) translate(2px, -3px);
+  }
+  .artist-scribble-char:nth-child(2) {
+    transform: rotate(11deg) translate(-4px, 4px);
+  }
+  .artist-scribble-char:nth-child(3) {
+    transform: rotate(-9deg) translate(3px, 2px);
+  }
+  .artist-scribble-char:nth-child(4) {
+    transform: rotate(16deg) translate(-2px, -5px);
+  }
+  .artist-photo-col {
+    background: repeating-linear-gradient(
+      -8deg,
+      #fff,
+      #fff 10px,
+      rgba(255,224,48,0.12) 10px,
+      rgba(255,224,48,0.12) 11px
+    );
+    border-right: 4px solid var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(0.85rem, 1.8vh, 1.5rem) clamp(0.65rem, 1.2vw, 1.15rem);
+    overflow: hidden;
+  }
+  .artist-photo-col figure {
+    margin: 0;
+    width: 100%;
+    max-width: min(100%, 420px);
+    animation: photoBob 6.5s ease-in-out infinite;
+  }
+  .artist-photo-col img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: min(calc(var(--artist-page-h) - 5.5rem), 78vh);
+    object-fit: contain;
+    object-position: center bottom;
+    border: 3px solid var(--black);
+    border-radius: 2px 4px 1px 5px;
+    box-shadow: 7px 6px 0 rgba(255,95,160,0.25), 12px 11px 0 rgba(0,0,0,0.08);
+  }
+  .artist-photo-col figcaption {
+    margin-top: 10px;
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: #666;
+    text-align: center;
+  }
+  .artist-info {
+    padding: clamp(0.85rem, 1.6vh, 1.25rem) clamp(1rem, 2.4vw, 2.75rem) clamp(0.75rem, 1.4vh, 1.1rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: clamp(0.65rem, 1.35vh, 0.95rem);
+    min-height: min-content;
+    overflow-x: hidden;
+    overflow-y: visible;
+    overscroll-behavior-y: auto;
+    background: linear-gradient(180deg, #fffefb 0%, #f6f2ea 55%, #efe9df 100%);
+    box-shadow: inset 0 0 0 1px rgba(17, 17, 17, 0.06);
+  }
+  /* 데스크톱만: 한 화면 고정 그리드 안에서 오른쪽 열 내부 스크롤 */
+  @media (min-width: 801px) {
+    .artist-page > .artist-label-col,
+    .artist-page > .artist-photo-col,
+    .artist-page > .artist-info {
+      min-height: 0;
+    }
+    .artist-info {
+      overflow-y: auto;
+      min-height: 0;
+      -webkit-overflow-scrolling: touch;
+      gap: clamp(0.72rem, 1.45vh, 1.05rem);
+    }
+    /* 이름·스펙 행 ↔ 성향 / 성향 ↔ 보컬·토크 / 보컬 ↔ 왜 현식인가 블록 */
+    .artist-info > .artist-info-row:nth-child(2) {
+      margin-top: 0.75rem;
+    }
+    .artist-info > .artist-info-row:nth-child(3) {
+      margin-top: 0.85rem;
+    }
+    .artist-info > .artist-info-row:nth-child(4) {
+      margin-top: 1rem;
+    }
+  }
+  .artist-info-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.55rem 0.65rem;
+    animation: rowRise 0.65s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  .artist-info > .artist-info-row:nth-child(1) { animation-delay: 0.08s; }
+  .artist-info > .artist-info-row:nth-child(2) { animation-delay: 0.14s; }
+  .artist-info > .artist-info-row:nth-child(3) { animation-delay: 0.2s; }
+  .artist-info > .artist-info-row:nth-child(4) { animation-delay: 0.26s; }
+  .artist-info-row--tight3 {
+    gap: 0.48rem 0.55rem;
+  }
+  .artist-info-block.wide {
+    grid-column: 1 / -1;
+  }
+  .artist-spec-inline {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #555;
+    line-height: 1.42;
+  }
+  .artist-aval-compact {
+    font-size: 13.5px;
+    line-height: 1.48;
+    font-weight: 700;
+  }
+  .artist-dual-msg {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(0.55rem, 1.4vw, 1.1rem);
+    align-items: start;
+  }
+  .artist-page .artist-info-block .akey {
+    font-size: 11.5px;
+    padding: 3px 9px 2px 7px;
+    margin-bottom: 5px;
+  }
+  .artist-page .artist-info-block .aval {
+    font-size: 14px;
+    line-height: 1.52;
+  }
+  .artist-page .artist-memo-chips {
+    gap: 6px;
+    margin-top: 5px;
+  }
+  .artist-page .artist-memo-chip {
+    font-size: 10.5px;
+    letter-spacing: 0.03em;
+    padding: 5px 10px 4px;
+    line-height: 1.32;
+  }
+  .artist-page .artist-dual-msg .artist-why-line,
+  .artist-page .artist-dual-msg .artist-charisma-jangkku {
+    font-size: 13px;
+    line-height: 1.48;
+    padding: 0.62rem 0.78rem 0.65rem;
+  }
+  .artist-page .artist-world-bundle__hype {
+    margin-top: 0.4rem;
+    padding-top: 0.42rem;
+  }
+  .artist-page .artist-quote {
+    margin-top: clamp(0.35rem, 0.9vh, 0.65rem);
+    padding: 0.65rem 0.9rem 0.68rem;
+    font-size: 13.5px;
+    line-height: 1.48;
+    flex-shrink: 0;
+  }
+  .artist-page .artist-quote::before {
+    top: -9px;
+    left: 10px;
+    font-size: 10px;
+    padding: 2px 7px 1px 6px;
+  }
+  /* 짧은 뷰포트: 아티스트 패널 한 화면 밀도 */
+  @media (min-width: 801px) and (max-height: 900px) {
+    .artist-info {
+      gap: 0.48rem;
+      padding: 0.65rem clamp(0.85rem, 2vw, 2rem) 0.55rem;
+    }
+    .artist-info > .artist-info-row:nth-child(2) {
+      margin-top: 0.28rem;
+    }
+    .artist-info > .artist-info-row:nth-child(3) {
+      margin-top: 0.32rem;
+    }
+    .artist-info > .artist-info-row:nth-child(4) {
+      margin-top: 0.36rem;
+    }
+    .artist-page .artist-info-block .aval {
+      font-size: 13px;
+      line-height: 1.44;
+    }
+    .artist-aval-compact { font-size: 12.5px; line-height: 1.42; }
+    .artist-spec-inline { font-size: 10.5px; line-height: 1.38; }
+    .artist-page .artist-memo-chip {
+      font-size: 10px;
+      padding: 4px 8px 3px;
+    }
+    .artist-page .artist-dual-msg .artist-why-line,
+    .artist-page .artist-dual-msg .artist-charisma-jangkku {
+      font-size: 12px;
+      line-height: 1.42;
+      padding: 0.5rem 0.65rem 0.52rem;
+    }
+    .artist-page .artist-quote {
+      margin-top: 0.3rem;
+      padding: 0.52rem 0.75rem 0.55rem;
+      font-size: 12.5px;
+      line-height: 1.42;
+    }
+  }
+  .artist-info-block .akey {
+    font-family: 'Black Han Sans', sans-serif; font-size: 11px;
+    letter-spacing: 0.12em; background: var(--black); color: var(--yellow);
+    display: inline-block; padding: 3px 9px 2px 7px; margin-bottom: 8px;
+    transform: rotate(-1.5deg);
+    box-shadow: 3px 2px 0 var(--pink);
+  }
+  .artist-info-block .aval {
+    font-size: 14px; font-weight: 700; line-height: 1.7; color: var(--black);
+  }
+  .artist-quote {
+    background: var(--yellow); border: 3px solid var(--black);
+    padding: 1.4rem 1.6rem; font-size: 15px; font-weight: 800;
+    line-height: 1.8; position: relative;
+    animation: quotePulse 5s ease-in-out infinite;
+    border-radius: 2px 6px 4px 3px;
+  }
+  .artist-quote::before {
+    content: '현식 왈';
+    font-family: 'Black Han Sans', sans-serif; font-size: 10px;
+    letter-spacing: 0.1em; position: absolute; top: -12px; left: 12px;
+    background: var(--pink); color: #fff; padding: 2px 8px; border: 2px solid var(--black);
+    transform: rotate(4deg);
+  }
+  .artist-why-line {
+    background: linear-gradient(135deg, #fff278 0%, var(--yellow) 50%, #ffd4a8 100%);
+    border: 3px solid var(--black);
+    padding: 1rem 1.25rem 1.05rem;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.75;
+    border-radius: 4px 10px 3px 8px;
+    box-shadow: 5px 5px 0 rgba(0,0,0,0.1);
+  }
+  .artist-charisma-jangkku {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.75;
+    background: linear-gradient(125deg, #f0f4ff 0%, #fff 40%, #fff8e8 100%);
+    border: 3px solid var(--black);
+    padding: 1rem 1.25rem 1.05rem;
+    border-radius: 5px 9px 8px 4px;
+    box-shadow: 5px 5px 0 var(--blue);
+  }
+  .artist-world-bundle__lead {
+    margin: 0;
+  }
+  .artist-world-bundle__hype {
+    margin: 0.65rem 0 0;
+    padding-top: 0.7rem;
+    border-top: 2px dashed rgba(17, 17, 17, 0.2);
+  }
+  .artist-memo-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .artist-memo-chip {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    padding: 8px 12px 6px;
+    border: 3px solid var(--black);
+    border-radius: 3px 8px 4px 5px;
+    background: #fff;
+    box-shadow: 3px 3px 0 var(--pink);
+    line-height: 1.35;
+  }
+  .artist-memo-chip:nth-child(3n+2) { transform: rotate(-0.8deg); box-shadow: 3px 3px 0 var(--blue); }
+  .artist-memo-chip:nth-child(3n+3) { transform: rotate(0.6deg); box-shadow: 3px 3px 0 var(--green); }
+
+  /* 태블릿·좁은 데스크톱: 3열 그리드가 과압축되지 않게 */
+  @media (max-width: 1080px) and (min-width: 801px) {
+    .artist-page {
+      grid-template-columns:
+        minmax(140px, 9.5rem)
+        minmax(220px, min(42vw, 380px))
+        minmax(200px, 1fr);
+    }
+  }
+
+  .cp-umbrella {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+    letter-spacing: 0.06em;
+    color: #1a3d2a;
+    margin: 0 0 0.85rem;
+    padding: 8px 12px 6px;
+    display: inline-block;
+    background: rgba(255,255,255,0.65);
+    border: 3px dashed var(--black);
+    border-radius: 4px;
+    line-height: 1.45;
+  }
+
+  /* ── PAGE 3~6: 콘텐츠 개별 페이지 ── */
+  .content-page {
+    display: grid;
+    /* 제목·개요 1/3, 본문 디테일 2/3 */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    /* 한 스냅 = 한 화면: 내용이 뷰포트 밖으로 넘치지 않게 */
+    --cp-page-h: calc(100vh - var(--sticky-top-h));
+    --cp-page-h: calc(100dvh - var(--sticky-top-h));
+    height: var(--cp-page-h);
+    min-height: var(--cp-page-h);
+    max-height: var(--cp-page-h);
+    overflow: hidden;
+    align-items: stretch;
+    grid-template-rows: minmax(0, 1fr);
+  }
+  /* 마지막 슬라이드: 푸터를 같은 .page 안 하단에 두어 스냅에 삼켜지지 않게 */
+  .content-page.page-last {
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+  .content-page.page-last .cp-left {
+    grid-row: 1;
+    grid-column: 1;
+  }
+  .content-page.page-last .cp-right {
+    grid-row: 1;
+    grid-column: 2;
+  }
+  .content-page.page-last > footer {
+    grid-row: 2;
+    grid-column: 1 / -1;
+  }
+  .cp-left {
+    border-right: 4px solid var(--black);
+    padding: 4.3rem 3.2rem 3.6rem 3.6rem;
+    display: flex; flex-direction: column; justify-content: center;
+    min-height: 0;
+  }
+  .cp-right {
+    padding: 3.5rem 3.4rem 4.2rem 3.1rem;
+    display: flex; flex-direction: column; justify-content: center;
+    background: var(--bg);
+    min-height: 0;
+  }
+  .content-page .cp-left {
+    padding: 2rem 2rem 1.75rem 2.2rem;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .content-page .cp-right {
+    padding: 1.35rem 1.5rem 1.35rem 1.35rem;
+    justify-content: flex-start;
+    gap: 0.35rem;
+    overflow: hidden;
+  }
+  .content-page .cp-num { margin-bottom: 0.45rem; }
+  .content-page .cp-rec { margin-bottom: 0.45rem; }
+  .content-page .cp-title {
+    font-size: clamp(1.75rem, 3.1vw, 2.65rem);
+    line-height: 1.08;
+    margin-bottom: 0.55rem;
+  }
+  .content-page .cp-desc {
+    font-size: 12.5px;
+    line-height: 1.62;
+    margin-bottom: 0.65rem;
+  }
+  .content-page .cp-umbrella {
+    margin-bottom: 0.45rem;
+    font-size: clamp(0.82rem, 1.6vw, 1rem);
+    padding: 6px 10px 5px;
+  }
+  .content-page .cp-tags { gap: 5px; }
+  .content-page .ctag {
+    font-size: 9px;
+    padding: 3px 9px 2px;
+    letter-spacing: 0.05em;
+  }
+  .content-page .detail-box {
+    padding: 0.65rem 0.85rem 0.7rem;
+    margin-bottom: 0;
+    min-height: 0;
+  }
+  .content-page .detail-box + .detail-box {
+    margin-top: 0.4rem !important;
+  }
+  .content-page .detail-box-label {
+    top: -8px;
+    left: 10px;
+    font-size: 9px;
+    padding: 2px 7px 1px 5px;
+  }
+  .content-page .detail-box-content {
+    font-size: 12px;
+    line-height: 1.52;
+  }
+  .content-page .detail-box-content .step {
+    margin-bottom: 2px;
+    gap: 6px;
+  }
+  .content-page .detail-box-content p {
+    font-size: 11.5px !important;
+    line-height: 1.55 !important;
+    margin-bottom: 0.35rem !important;
+  }
+  .content-page .cp-ref-row {
+    gap: 0.45rem;
+    align-items: flex-end;
+  }
+  .content-page .cp-ref-row figure {
+    flex: 1 1 38%;
+    min-width: 0;
+    max-width: calc(50% - 0.25rem);
+  }
+  .content-page .cp-ref-row img {
+    max-height: min(269px, 31svh);
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center bottom;
+  }
+  .content-page .ep-badges { gap: 5px; }
+  .content-page .ep-badge {
+    font-size: 9.5px;
+    padding: 3px 9px 2px;
+  }
+  .content-page.page-last > footer {
+    padding: 1rem 2rem;
+    flex-shrink: 0;
+  }
+  .cp-num {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 11px; letter-spacing: 0.28em; color: #888; margin-bottom: 0.8rem;
+    transform: rotate(-0.8deg);
+    transform-origin: left top;
+  }
+  .cp-rec {
+    display: inline-block;
+    font-family: 'Black Han Sans', sans-serif; font-size: 10px;
+    letter-spacing: 0.1em; padding: 3px 10px;
+    background: var(--pink); color: #fff; border: 3px solid var(--black);
+    margin-bottom: 0.8rem;
+    animation: recTilt 2.8s ease-in-out infinite;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.12);
+  }
+  .cp-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1rem;
+    transform-origin: left top;
+    animation: cpTitleSkew 6s ease-in-out infinite;
+  }
+  .cp-desc {
+    font-size: 14px; font-weight: 700; color: #555; line-height: 1.85;
+    margin-bottom: 1.5rem;
+  }
+  .cp-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .cp-ref-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    align-items: flex-start;
+  }
+  .cp-ref-row figure {
+    flex: 1 1 calc(50% - 0.5rem);
+    min-width: min(100%, 200px);
+    max-width: 100%;
+    margin: 0;
+  }
+  .cp-ref-row img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 3px solid var(--black);
+    border-radius: 3px 5px 2px 4px;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.08);
+  }
+  .ctag {
+    font-family: 'Black Han Sans', sans-serif; font-size: 10px;
+    letter-spacing: 0.06em; padding: 4px 12px; border: 2px solid var(--black);
+    background: #fff;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.06);
+  }
+  .cp-tags .ctag:nth-child(5n+1) { transform: rotate(-2deg); }
+  .cp-tags .ctag:nth-child(5n+2) { transform: rotate(1.5deg); }
+  .cp-tags .ctag:nth-child(5n+3) { transform: rotate(-1deg) translateY(2px); }
+  .cp-tags .ctag:nth-child(5n+4) { transform: rotate(2.2deg); }
+  .cp-tags .ctag:nth-child(5n+5) { transform: rotate(-1.8deg) translateY(-1px); }
+
+  /* 디테일 박스들 */
+  .detail-box {
+    border: 3px solid var(--black); padding: 1.4rem 1.6rem; margin-bottom: 1rem;
+    position: relative;
+    background: rgba(255,255,255,0.55);
+    box-shadow: 4px 5px 0 rgba(0,0,0,0.06);
+    border-radius: 3px 5px 2px 4px;
+    animation: detailGlow 5.5s ease-in-out infinite;
+    transition: transform 0.2s ease;
+  }
+  .detail-box:nth-of-type(odd) { transform: rotate(-0.35deg); animation-delay: 0s; }
+  .detail-box:nth-of-type(even) { transform: rotate(0.4deg); animation-delay: 0.55s; }
+  .detail-box-label {
+    position: absolute; top: -12px; left: 12px;
+    font-family: 'Black Han Sans', sans-serif; font-size: 10px;
+    letter-spacing: 0.1em; padding: 2px 8px; border: 2px solid var(--black);
+    background: var(--black); color: var(--yellow);
+    transform: rotate(-2deg);
+  }
+  .detail-box-content {
+    font-size: 13.5px; font-weight: 700; line-height: 1.8; color: #222;
+  }
+  .detail-box-content .step {
+    display: flex; align-items: flex-start; gap: 8px; margin-bottom: 4px;
+  }
+  .step-arrow {
+    font-family: 'Black Han Sans', sans-serif; font-size: 11px;
+    color: var(--pink); flex-shrink: 0; padding-top: 2px;
+    display: inline-block;
+    animation: arrowNudge 1.35s ease-in-out infinite;
+  }
+
+  /* 에피소드 뱃지 */
+  .ep-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ep-badge {
+    font-family: 'Black Han Sans', sans-serif; font-size: 11px;
+    padding: 5px 12px; border: 3px solid var(--black); letter-spacing: 0.05em;
+    box-shadow: 2px 3px 0 rgba(0,0,0,0.08);
+  }
+  .ep-badges .ep-badge:nth-child(4n+1) { transform: rotate(-2.2deg); }
+  .ep-badges .ep-badge:nth-child(4n+2) { transform: rotate(1.4deg); }
+  .ep-badges .ep-badge:nth-child(4n+3) { transform: rotate(-1deg); }
+  .ep-badges .ep-badge:nth-child(4n+4) { transform: rotate(2deg) translateY(2px); }
+
+  /* 배경 색상별 */
+  .bg-white { background: linear-gradient(175deg, #fff 0%, #f7f7f7 100%); }
+  .bg-yellow { background: linear-gradient(190deg, #fff278 0%, var(--yellow) 55%, #f0c820 100%); }
+  .bg-blue-light { background: linear-gradient(200deg, #f5f8ff 0%, #e3ecff 100%); }
+  .bg-green-light { background: linear-gradient(185deg, #f2fcf6 0%, #dff5ea 100%); }
+  .bg-pink-light { background: linear-gradient(195deg, #fff8fb 0%, #ffddea 100%); }
+  .bg-orange-light { background: linear-gradient(188deg, #fffaf2 0%, #ffe8cc 100%); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black); padding: 2rem 3.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 5px dashed var(--yellow);
+    transform: rotate(-0.35deg) scale(1.002);
+    transform-origin: center center;
+  }
+  footer span {
+    font-family: 'Black Han Sans', sans-serif; font-size: 12px;
+    letter-spacing: 0.12em; color: var(--yellow);
+    display: inline-block;
+    animation: footerHue 5.5s ease-in-out infinite;
+  }
+  footer span:last-child { animation-delay: 0.4s; }
+
+  /* 호버 반응 */
+  .chip,
+  .ctag,
+  .ep-badge {
+    position: relative;
+    transition: filter 0.2s ease, box-shadow 0.2s ease;
+    cursor: default;
+  }
+  .chip:hover,
+  .ctag:hover,
+  .ep-badge:hover {
+    filter: brightness(1.08) saturate(1.12);
+    box-shadow: 4px 5px 0 rgba(0,0,0,0.12);
+    z-index: 2;
+  }
+  .detail-box:hover {
+    transform: scale(1.01) rotate(0deg) !important;
+  }
+
+  @supports (animation-timeline: view()) {
+    .content-page .cp-left {
+      animation: panelPeek 0.75s ease-out both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
+    }
+    .content-page .cp-right {
+      animation: panelPeek 0.75s ease-out both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 52%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .snap-scroll {
+      scroll-snap-type: none;
+      scroll-behavior: auto;
+    }
+    .page { scroll-snap-stop: normal; }
+    .marquee-inner {
+      animation: marquee 18s linear infinite;
+    }
+    .marquee-inner span:nth-child(4n+1),
+    .marquee-inner span:nth-child(4n+3) {
+      animation: none !important;
+    }
+    .hero-left::after,
+    .hero-right::before {
+      animation: none !important;
+      opacity: 0.25;
+    }
+    .hero-scroll-hint,
+    .hero-scroll-hint__chevs span {
+      animation: none !important;
+      opacity: 0.14;
+    }
+    .hero-photo-area img.hero-cutout,
+    .hero-left-label,
+    .sticker,
+    .hero-title,
+    .hero-title .accent,
+    .hero-title .accent2,
+    .artist-photo-col figure,
+    .artist-info > .artist-info-row,
+    .artist-quote,
+    .cp-rec,
+    .cp-title,
+    .detail-box,
+    .step-arrow,
+    footer span {
+      animation: none !important;
+    }
+    .content-page .cp-left,
+    .content-page .cp-right {
+      animation: none !important;
+    }
+    .marquee-wrap,
+    .marquee-inner span,
+    .hero-title,
+    .hero-title .accent,
+    .hero-title .accent2,
+    .hero-left-label,
+    .hero-sub,
+    .sticker,
+    .chip,
+    .hero-photo-area img.hero-cutout,
+    .artist-label-col,
+    .artist-label-scribble,
+    .artist-scribble-char,
+    .artist-photo-col figure,
+    .artist-info-block .akey,
+    .artist-quote,
+    .artist-quote::before,
+    .cp-num,
+    .cp-rec,
+    .cp-title,
+    .cp-tags .ctag,
+    .detail-box,
+    .detail-box-label,
+    .ep-badges .ep-badge,
+    .artist-memo-chip,
+    footer {
+      transform: none !important;
+    }
+  }
+
+  @media (max-width: 800px) {
+    /* ── 스크롤 / 세이프 영역: 모바일에서 스냅·가독성 ── */
+    .snap-scroll {
+      scroll-snap-type: none;
+      scroll-padding-top: max(var(--sticky-top-h), calc(44px + env(safe-area-inset-top, 0px)));
+      padding-left: env(safe-area-inset-left, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      -webkit-tap-highlight-color: transparent;
+      overscroll-behavior-y: auto;
+    }
+    .page {
+      scroll-snap-stop: normal;
+      scroll-snap-align: none;
+    }
+
+    /* 마퀴: 터치 영역·가독성 */
+    .marquee-wrap {
+      transform: none;
+      box-shadow: none;
+      padding-top: calc(11px + env(safe-area-inset-top, 0px));
+      padding-bottom: 10px;
+    }
+    .marquee-inner span {
+      font-size: 13px;
+      margin-right: 2rem;
+      line-height: 1.35;
+    }
+
+    /* 히어로: 카피 먼저 → 사진 (모바일 읽기 순서) */
+    .hero {
+      display: flex;
+      flex-direction: column;
+    }
+    .hero-right {
+      order: -1;
+      padding: calc(0.9rem + env(safe-area-inset-top, 0px)) 1.2rem 1.35rem;
+      border-bottom: 4px solid var(--black);
+    }
+    .sticker {
+      position: relative;
+      top: auto;
+      right: auto;
+      align-self: flex-end;
+      margin: 0 0 0.65rem;
+      font-size: 10px;
+      padding: 8px 12px 6px 10px;
+    }
+    .hero-title {
+      font-size: clamp(2.65rem, 11.5vw, 4.1rem);
+      letter-spacing: -0.035em;
+      margin-bottom: 0.85rem;
+    }
+    .hero-sub {
+      font-size: 15px;
+      max-width: none;
+      margin-bottom: 1.35rem;
+      line-height: 1.75;
+      padding: 0.45rem 0 0.65rem 1rem;
+    }
+    .hero-chips {
+      gap: 8px;
+    }
+    .chip {
+      font-size: 12px;
+      padding: 10px 14px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-left {
+      order: 1;
+      flex: 1 1 auto;
+      min-height: min(52vh, 420px);
+      padding: 1.1rem 1rem 1.35rem;
+      border-right: none;
+    }
+    .hero-left-label {
+      font-size: 12px;
+      padding: 8px 14px 6px 11px;
+    }
+    .hero-photo-area {
+      padding: 0 0.4rem 0.85rem;
+    }
+    .hero-photo-grid {
+      max-width: 100%;
+      gap: 8px 10px;
+    }
+    .hero-photo-area img.hero-cutout--main {
+      max-width: min(58vw, 300px);
+      max-height: min(52vh, 460px);
+    }
+    .hero-scroll-hint {
+      font-size: 9px;
+      bottom: max(0.45rem, env(safe-area-inset-bottom, 0px));
+      opacity: 0.32;
+    }
+    .hero-scroll-hint__line {
+      font-size: 10px;
+    }
+
+    /* 아티스트 */
+    .artist-label-col {
+      transform: none;
+      padding: 1.1rem 1rem;
+      border-right: none;
+      border-bottom: 4px solid var(--black);
+    }
+    /* 아티스트: 한 화면 고정·내부 스크롤 해제 → 길게 이어져 바깥(.snap-scroll)만 스크롤, 사진·글 잘림 방지 */
+    .artist-page {
+      grid-template-columns: 1fr;
+      height: auto;
+      min-height: calc(100svh - var(--sticky-top-h));
+      max-height: none;
+      overflow: visible;
+    }
+    .artist-page > .artist-label-col,
+    .artist-page > .artist-photo-col,
+    .artist-page > .artist-info {
+      min-height: min-content;
+      overflow: visible;
+    }
+    .artist-photo-col {
+      border-right: none;
+      border-bottom: 3px solid var(--black);
+      padding: 0.75rem 1rem 0.9rem;
+      overflow: visible;
+      align-items: center;
+    }
+    .artist-photo-col figure {
+      max-width: min(92vw, 400px);
+      width: 100%;
+      margin: 0 auto;
+    }
+    .artist-photo-col img {
+      max-height: none;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      object-position: center center;
+    }
+    .artist-info {
+      padding: 0.85rem 1rem 1.25rem;
+      gap: 0.65rem;
+      overflow: visible;
+      min-height: min-content;
+      -webkit-overflow-scrolling: auto;
+      overscroll-behavior-y: auto;
+      overflow-wrap: anywhere;
+      word-break: keep-all;
+    }
+    .artist-dual-msg {
+      grid-template-columns: 1fr;
+      gap: 0.45rem;
+    }
+    .artist-page .artist-info-block .akey {
+      font-size: 9px;
+      margin-bottom: 4px;
+    }
+    .artist-page .artist-info-block .aval {
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .artist-page .artist-dual-msg .artist-why-line,
+    .artist-page .artist-dual-msg .artist-charisma-jangkku {
+      font-size: 11px;
+      padding: 0.48rem 0.6rem 0.5rem;
+    }
+    .artist-info-block .akey {
+      font-size: 10px;
+      margin-bottom: 6px;
+    }
+    .artist-info-block .aval {
+      font-size: 15px;
+      line-height: 1.75;
+    }
+    .artist-why-line {
+      font-size: 14px;
+      padding: 0.9rem 1rem;
+    }
+    .artist-charisma-jangkku {
+      font-size: 15px;
+      padding: 0.95rem 1.05rem;
+    }
+    .artist-memo-chip {
+      font-size: 10px;
+      padding: 7px 10px 5px;
+    }
+    .artist-quote {
+      font-size: 15px;
+      padding: 1.2rem 1.15rem;
+      line-height: 1.75;
+    }
+    .artist-page .artist-quote {
+      font-size: 11px;
+      padding: 0.5rem 0.65rem 0.52rem;
+      line-height: 1.38;
+    }
+    .artist-label-col .artist-label-scribble {
+      writing-mode: horizontal-tb;
+      transform: rotate(-2.5deg);
+      letter-spacing: 0.08em;
+      line-height: 1;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.02em;
+      padding: 0.35rem 0;
+    }
+    .artist-label-col .artist-scribble-char:nth-child(1) { transform: rotate(-10deg) translateY(2px); }
+    .artist-label-col .artist-scribble-char:nth-child(2) { transform: rotate(8deg) translateY(-3px); }
+    .artist-label-col .artist-scribble-char:nth-child(3) { transform: rotate(-6deg) translateY(1px); }
+    .artist-label-col .artist-scribble-char:nth-child(4) { transform: rotate(12deg) translateY(-2px); }
+    .artist-info-row { grid-template-columns: 1fr; gap: 1.1rem; }
+    .artist-info-row--tight3 {
+      grid-template-columns: 1fr !important;
+      gap: 0.55rem 0 !important;
+    }
+
+    .content-page .cp-title {
+      font-size: clamp(1.55rem, 7vw, 2.15rem);
+      margin-bottom: 0.4rem;
+    }
+    .content-page .cp-desc {
+      font-size: 12px;
+      line-height: 1.55;
+      margin-bottom: 0.45rem;
+    }
+    .content-page .detail-box {
+      padding: 0.65rem 0.85rem 0.72rem;
+      position: relative;
+      z-index: 0;
+    }
+    .content-page .detail-box + .detail-box {
+      margin-top: 0.85rem !important;
+    }
+    .content-page .detail-box-label {
+      position: static !important;
+      top: auto !important;
+      left: auto !important;
+      transform: none !important;
+      display: inline-block;
+      margin: 0 0 0.42rem 0;
+      box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+    }
+    .content-page .detail-box-content {
+      font-size: 11.5px;
+      line-height: 1.48;
+    }
+    .content-page .cp-ref-row img {
+      max-height: min(202px, 25svh);
+    }
+    .cp-num {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      margin-bottom: 0.55rem;
+    }
+    .cp-rec {
+      font-size: 10px;
+      padding: 5px 11px;
+      margin-bottom: 0.55rem;
+    }
+    .cp-title {
+      font-size: clamp(1.85rem, 8vw, 2.55rem);
+      margin-bottom: 0.65rem;
+    }
+    .cp-umbrella {
+      font-size: 0.88rem;
+      margin-bottom: 0.6rem;
+      padding: 7px 10px 5px;
+      max-width: 100%;
+    }
+    .cp-desc {
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .cp-tags {
+      gap: 8px;
+    }
+    .ctag {
+      font-size: 11px;
+      padding: 8px 12px;
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      letter-spacing: 0.05em;
+    }
+    .cp-tags .ctag:nth-child(n) {
+      transform: none;
+    }
+    .detail-box {
+      padding: 1.2rem 1.05rem 1.15rem;
+      margin-bottom: 0.8rem;
+      transform: none !important;
+    }
+    .detail-box:nth-of-type(odd),
+    .detail-box:nth-of-type(even) {
+      transform: none !important;
+    }
+    .detail-box:hover {
+      transform: none !important;
+    }
+    .detail-box-label {
+      top: -9px;
+      left: 10px;
+      font-size: 10px;
+      padding: 3px 8px 2px 6px;
+    }
+    .detail-box-content {
+      font-size: 15px;
+      line-height: 1.75;
+    }
+    .detail-box-content .step {
+      margin-bottom: 0.55rem;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .step-arrow {
+      padding-top: 4px;
+    }
+    .cp-ref-row {
+      gap: 1rem;
+    }
+    .cp-ref-row figure {
+      flex: 1 1 100%;
+      min-width: 0;
+      max-width: 100%;
+    }
+    .content-page .cp-ref-row {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 0.35rem;
+    }
+    .content-page .cp-ref-row figure {
+      flex: 1 1 42%;
+      max-width: 50%;
+      min-width: 0;
+    }
+    .content-page .ep-badges {
+      gap: 6px;
+    }
+    .content-page .ep-badge {
+      min-height: 0;
+      font-size: 10px;
+      padding: 5px 10px 4px;
+      line-height: 1.25;
+    }
+    .ep-badges {
+      gap: 8px;
+    }
+    .ep-badge {
+      font-size: 11px;
+      padding: 8px 12px;
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .ep-badges .ep-badge:nth-child(n) {
+      transform: none;
+    }
+
+    footer {
+      transform: none;
+      flex-direction: column;
+      gap: 0.6rem;
+      padding: 1.35rem 1.1rem calc(1.35rem + env(safe-area-inset-bottom, 0px));
+      text-align: center;
+      justify-content: center;
+    }
+    footer span {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      line-height: 1.45;
+      max-width: 100%;
+    }
+  }
+
+  /* 콘텐츠 4페이지: 641px 이상 — 좌 1/3 · 우 2/3 (1fr : 2fr) 강제 */
+  @media (min-width: 641px) {
+    .page.content-page {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      grid-template-rows: minmax(0, 1fr);
+    }
+    .page.content-page.page-last {
+      grid-template-rows: minmax(0, 1fr) auto;
+    }
+    .content-page.page-last .cp-left {
+      grid-row: 1;
+      grid-column: 1;
+      max-height: none;
+    }
+    .content-page.page-last .cp-right {
+      grid-row: 1;
+      grid-column: 2;
+    }
+    .content-page.page-last > footer {
+      grid-row: 2;
+      grid-column: 1 / -1;
+    }
+    .content-page .cp-left {
+      max-height: none;
+      border-right: 4px solid var(--black);
+      border-bottom: none;
+    }
+  }
+
+  /* 콘텐츠 4페이지: 640px 이하만 위(제목·개요) → 아래(본문) 세로 스택 */
+  @media (max-width: 640px) {
+    .page.content-page {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+      align-items: stretch;
+    }
+    .page.content-page .cp-left,
+    .page.content-page .cp-right {
+      justify-content: flex-start;
+    }
+    .page.content-page .cp-left {
+      max-height: none;
+      min-height: min-content;
+      padding: 1rem 1.05rem 1rem;
+      overflow: visible;
+      border-right: none;
+      border-bottom: 4px solid var(--black);
+    }
+    .page.content-page .cp-right {
+      min-height: 0;
+      padding: 0.65rem 0.85rem max(0.65rem, env(safe-area-inset-bottom, 0px));
+      overflow-x: hidden;
+      overflow-y: visible;
+      gap: 0.5rem;
+    }
+    .page.content-page.page-last {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+    }
+    .page.content-page.page-last .cp-left {
+      grid-row: 1;
+      grid-column: 1;
+      max-height: none;
+    }
+    .page.content-page.page-last .cp-right {
+      grid-row: 2;
+      grid-column: 1;
+      min-height: 0;
+    }
+    .page.content-page.page-last > footer {
+      grid-row: 3;
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* 모바일(≤800px): 콘텐츠 제목·개요(cp-left) 잘림 방지 + 페이지 높이 자연화 */
+  @media (max-width: 800px) {
+    .page.content-page,
+    .page.content-page.page-last {
+      height: auto;
+      min-height: calc(100svh - var(--sticky-top-h));
+      max-height: none;
+      overflow: visible;
+      grid-template-rows: auto;
+      align-content: start;
+    }
+    .content-page .cp-left,
+    .content-page .cp-right {
+      max-height: none;
+      min-height: 0;
+    }
+    .content-page .cp-right {
+      overflow-x: hidden;
+      overflow-y: visible;
+    }
+    /* 제목/개요 열: 숨김·세로 중앙 정렬 해제 → 전부 읽히게 */
+    .content-page .cp-left {
+      overflow: visible;
+      justify-content: flex-start;
+      align-items: stretch;
+      padding: 1.05rem 0.95rem 1.15rem;
+      min-height: min-content;
+    }
+    .content-page .cp-left .cp-num,
+    .content-page .cp-left .cp-title,
+    .content-page .cp-left .cp-desc,
+    .content-page .cp-left .cp-umbrella {
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      word-break: keep-all;
+    }
+    .content-page .cp-tags {
+      width: 100%;
+      flex-wrap: wrap;
+      row-gap: 0.4rem;
+    }
+    .content-page .cp-title {
+      font-size: clamp(1.38rem, 5.5vw, 1.95rem);
+      line-height: 1.14;
+      margin-bottom: 0.45rem;
+    }
+    .content-page .cp-desc {
+      font-size: clamp(12px, 3.25vw, 15px);
+      line-height: 1.58;
+      margin-bottom: 0.5rem;
+    }
+    .content-page .cp-num {
+      letter-spacing: 0.14em;
+    }
+    .content-page .cp-umbrella {
+      font-size: clamp(0.76rem, 3vw, 0.92rem);
+      line-height: 1.45;
+    }
+    .content-page .ctag {
+      min-height: auto;
+    }
+  }
+
+  /* 좁은 가로(태블릿) 2열: 제목 열 최소 너비 확보 */
+  @media (max-width: 800px) and (min-width: 641px) {
+    .page.content-page,
+    .page.content-page.page-last {
+      grid-template-columns: minmax(11.75rem, 1fr) minmax(0, 1.9fr);
+    }
+  }
+</style>
+</head>
+<body>
+<div class="snap-scroll">
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span>원현식 콘텐츠 기획안</span><span>🎵</span>
+    <span>MBC STUDIO 596 ORIGINAL</span><span>🎤</span>
+    <span>XODIAC HYUNSIK</span><span>⭐</span>
+    <span>THE WAVES × 596</span><span>🎵</span>
+    <span>원현식 콘텐츠 기획안</span><span>🎵</span>
+    <span>MBC STUDIO 596 ORIGINAL</span><span>🎤</span>
+    <span>XODIAC HYUNSIK</span><span>⭐</span>
+    <span>THE WAVES × 596</span><span>🎵</span>
+  </div>
+</div>
+
+<!-- PAGE 1: HERO -->
+<section class="page hero">
+  <div class="hero-left">
+    <div class="hero-photo-area">
+      <div class="hero-photo-grid">
+        <img class="hero-cutout hero-cutout--main" src="assets/images/page-01-hero/hero-cutout.png" alt="원현식 — 헬로키티 모자 컷" width="261" height="342" decoding="async">
+        <img class="hero-cutout hero-cutout--main" src="assets/images/page-01-hero/hero-cutout-2.png" alt="원현식 — 인형과 함께" width="192" height="347" decoding="async">
+      </div>
+    </div>
+    <div class="hero-left-label" style="position:relative;z-index:2;">HYUNSIK · 원현식</div>
+  </div>
+  <div class="hero-right">
+    <div class="sticker">Studio 596 Original</div>
+    <h1 class="hero-title">
+      원현식,<br>
+      <span class="accent">뭔가</span><br>
+      <span class="accent2">해봄</span>
+    </h1>
+    <p class="hero-sub">
+      XODIAC 메인보컬 현식과 함께 만드는<br>
+      MBC 스튜디오596 오리지널 콘텐츠.<br>
+      아직 뭔지는 모름. 같이 정해봄.
+    </p>
+    <div class="hero-chips">
+      <span class="chip y">보컬</span>
+      <span class="chip p">음악 메이킹</span>
+      <span class="chip b">스토리</span>
+      <span class="chip">인터뷰</span>
+      <span class="chip g">드라이브</span>
+      <span class="chip o">여행</span>
+      <span class="chip">출사</span>
+    </div>
+  </div>
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <div class="hero-scroll-hint__chevs">
+      <span>V</span><span>V</span><span>V</span>
+    </div>
+    <span class="hero-scroll-hint__line">개봉박두</span>
+  </div>
+</section>
+
+<!-- PAGE 2: ARTIST -->
+<section class="page artist-page">
+  <div class="artist-label-col">
+    <span class="artist-label-scribble" aria-label="아티스트"><span class="artist-scribble-char">아</span><span class="artist-scribble-char">티</span><span class="artist-scribble-char">스</span><span class="artist-scribble-char">트</span></span>
+  </div>
+  <div class="artist-photo-col">
+    <figure>
+      <img src="assets/images/page-02-artist/17TOLi_jL28DLIPMWJPCkUm1yokoVyrnwXDGuPY6PuHDPJRFcgZwukF5lTr9-NsvUf09lmqGJKMq8KlBqbarmw.webp" alt="XODIAC 현식 프로필" width="800" height="1200" loading="lazy" decoding="async">
+      <figcaption>HYUNSIK · XODIAC</figcaption>
+    </figure>
+  </div>
+  <div class="artist-info">
+    <div class="artist-info-row artist-info-row--tight3">
+      <div class="artist-info-block">
+        <div class="akey">이름 · 스펙</div>
+        <div class="aval">원현식 (元鉉植)<br>HYUNSIK · 1997.09.12 · ENFJ<span class="artist-spec-inline">수원 출신 · 176·56 A형 · 육군 9사단 만기 전역<br>프듀X 101·HNB → OCJ Newbies → 2023.04.25 XODIAC 보컬리더 데뷔 · 2023.03.10 5번째 멤버 공개</span></div>
+      </div>
+      <div class="artist-info-block">
+        <div class="akey">그룹 · 소속</div>
+        <div class="aval">XODIAC (소디엑)<br>잭소 엔터테인먼트 · 메인보컬 · 보컬 리더</div>
+      </div>
+      <div class="artist-info-block">
+        <div class="akey">별명 · 케미</div>
+        <div class="aval">띡, 현띡, 원장꾸 🐹<br>규민이랑 <b>장꾸즈</b> — 비하인드 장난 콤비</div>
+      </div>
+    </div>
+    <div class="artist-info-row">
+      <div class="artist-info-block wide">
+        <div class="akey">성향 · 취향 한 스푼</div>
+        <div class="aval artist-aval-compact">장난기 많고 멤버한테 장난 자주 · E지만 <b>혼자만의 시간</b> 꼭 필요 · 잘 먹고 혼밥 좋아함 · 엽기떡(덜 매움)+너구리+계란 2 / 마라는 비호 · 갑각류 알레르기 · 섬유유연제·시원한 향 · <b>비 오는 건 싫음</b> ☔</div>
+      </div>
+    </div>
+    <div class="artist-info-row">
+      <div class="artist-info-block wide">
+        <div class="akey">보컬 · 토크 소재</div>
+        <div class="aval">
+          넓은 음역·반가성 기반 발성으로 팀 보컬 라인 중심 — 허스키+여린 미성, 군 전역 후 톤은 더 묵직해짐. 〈THROW A DICE〉 등에서 고음·라이브 안정감 체감. 최애곡 권진아 〈운이 좋았지〉, 롤모델 <b>백현·권진아</b> · 고교 밴드부 축제 무대 경험 · <b>드라마 OST</b>는 버킷리스트.
+          <div class="artist-memo-chips">
+            <span class="artist-memo-chip">🎤 팀 내 유일 군필 — 리얼 토크 재료</span>
+            <span class="artist-memo-chip">🎬 〈전 남편은 열여덟〉강시우 — 숏폼 드라마 주연</span>
+            <span class="artist-memo-chip">🎹 메인보컬의 ‘처음’ — 곡·장르 도전 서사</span>
+            <span class="artist-memo-chip">🚗 장롱면허 — 운전대 레전드 각</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="artist-info-row">
+      <div class="artist-info-block wide">
+        <div class="artist-dual-msg">
+          <div>
+            <div class="akey">왜 현식인가</div>
+            <div class="aval artist-why-line">
+              무대·스케줄에 맞춰 <b>틀에 맞춰 온 시간</b>은 이미 충분히 보여줬고, <b>카메라 앞에서 처음 손대 보는 것들</b>을 같이 깨트려 보고 싶은 게 지금의 현식.
+            </div>
+          </div>
+          <div>
+            <div class="akey">세상이 알아야 할 것</div>
+            <div class="aval artist-charisma-jangkku artist-world-bundle">
+              <p class="artist-world-bundle__lead">무대 카리스마 뒤에 숨은 <b>장꾸 DNA</b> — 예능·토크에서 터지는 타이밍이 따로 있음.</p>
+              <p class="artist-world-bundle__hype"><strong>얼굴·노래·유머</strong> 삼박자 <strong>만능 예능돌</strong> 후보.<br>
+              <strong>그 포텐</strong>을 이번 시리즈가 레버로 당겨 보자.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="artist-quote">
+      "진짜 자유로운 환경이 제일 보여주기 좋지 않을까 싶어요" — 현식
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 3: 01 보컬 처방전 -->
+<section class="page content-page">
+  <div class="cp-left bg-white">
+    <div class="cp-num">CONTENT 01 / 04</div>
+    <div class="cp-title">보컬<br>처방전</div>
+    <p class="cp-desc">
+      팬 사연에 어울리는 감정을<br>
+      현식이 노래 한 소절로 답해주는 콘텐츠.<br>
+      대본 없이, 그냥 자연스럽게.<br>
+      <strong>매 에피소드마다 로케를 달리</strong> 잡아서, 바닷가·서울 근교 등<br>
+      <strong>야외</strong> 분위기로 감정이랑 화면을 같이 살려감.
+    </p>
+    <div class="cp-tags">
+      <span class="ctag">감성 토크</span>
+      <span class="ctag">라이브</span>
+      <span class="ctag">팬 참여</span>
+      <span class="ctag">숏폼 뽑기 쉬움</span>
+      <span class="ctag">회차별 로케</span>
+      <span class="ctag">야외 촬영</span>
+    </div>
+  </div>
+  <div class="cp-right bg-pink-light">
+    <div class="detail-box" style="background:#fff;">
+      <div class="detail-box-label">형식</div>
+      <div class="detail-box-content">
+        <div class="step"><span class="step-arrow">→</span><span>팬 사연 읽기</span></div>
+        <div class="step"><span class="step-arrow">→</span><span>공감 토크</span></div>
+        <div class="step"><span class="step-arrow">→</span><span>감정에 맞는 한 소절 라이브</span></div>
+        <div class="step"><span class="step-arrow">→</span><span>팬들에게 한마디 마무리</span></div>
+      </div>
+    </div>
+    <div class="detail-box" style="background:#fff; margin-top: 1.5rem;">
+      <div class="detail-box-label">로케</div>
+      <div class="detail-box-content">
+        <strong>매 에피소드마다 다른 장소</strong>로 촬영 — 같은 스튜디오 느낌이 아니라 회차마다 풍경이 바뀌게.<br>
+        <b>야외 로케</b>를 기본으로 두고, 바닷가·강변·숲길·서울 근교 카페거리 등 감정이랑 어울리는 곳을 번갈아 가며 잡는 그림.
+      </div>
+    </div>
+    <div class="detail-box" style="background:#fff; margin-top: 1.5rem;">
+      <div class="detail-box-label">비주얼 레퍼런스</div>
+      <div class="detail-box-content">
+        <div class="cp-ref-row">
+          <figure>
+            <img src="assets/images/page-03-content01-vocal/vocal-ref-a.webp" alt="레퍼런스: 야외 계단 로케에서 라이브" width="1920" height="1204" loading="lazy" decoding="async">
+          </figure>
+          <figure>
+            <img src="assets/images/page-03-content01-vocal/vocal-ref-b.webp" alt="레퍼런스: 노을·식물 배경 야외 로케" width="1920" height="1204" loading="lazy" decoding="async">
+          </figure>
+        </div>
+      </div>
+    </div>
+    <div class="detail-box" style="background:#fff; margin-top: 1.5rem;">
+      <div class="detail-box-label">회차 예시</div>
+      <div class="detail-box-content">
+        <div class="ep-badges">
+          <span class="ep-badge" style="background:var(--yellow);">EP.1 비 오는 날</span>
+          <span class="ep-badge" style="background:#FFD6E8;">EP.2 고백 직전</span>
+          <span class="ep-badge" style="background:#E0E8FF;">EP.3 혼자 있는 밤</span>
+          <span class="ep-badge" style="background:#E0FFE8;">EP.4 보내고 싶지 않은 순간</span>
+        </div>
+      </div>
+    </div>
+    <div class="detail-box" style="background:#fff; margin-top: 1.5rem;">
+      <div class="detail-box-label">강점</div>
+      <div class="detail-box-content">무거운 풀대본 없이, <strong>간단한 구성 대본</strong>과 <strong>사연</strong>만 잡아 두고 현장에서 자유롭게 진행. 메인보컬 이미지 직결.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 4: 02 처음으로 곡 써봄 -->
+<section class="page content-page">
+  <div class="cp-left bg-yellow">
+    <div class="cp-num">CONTENT 02 / 04</div>
+    <div class="cp-rec">⭐ 제일 추천</div>
+    <div class="cp-title">현식이<br>처음으로<br>곡 써봄</div>
+    <p class="cp-desc">
+      곡 써본 적 없는 메인보컬이<br>
+      <strong>시리즈마다 다른 장르</strong>를 정해 파고들며 처음으로 음악을 만들어가는 과정.<br>
+      과정은 웃기고 결과물은 진짜 좋아야 함.
+    </p>
+    <div class="cp-tags">
+      <span class="ctag">음악 메이킹</span>
+      <span class="ctag">예능감 있음</span>
+      <span class="ctag">결과물 남음</span>
+      <span class="ctag">딩고 스타일</span>
+      <span class="ctag">오리지널 음원</span>
+      <span class="ctag">시리즈별 장르</span>
+    </div>
+  </div>
+  <div class="cp-right bg-orange-light">
+    <div class="detail-box" style="background:#fff;">
+      <div class="detail-box-label">형식</div>
+      <div class="detail-box-content">
+        <p style="font-size:12.5px;font-weight:700;color:#444;margin-bottom:12px;line-height:1.75;">
+          <strong>딩고 스타일</strong>로 음원 <strong>오리지널 콘텐츠 시리즈</strong>를 제작.<br>
+          <strong>현식</strong>은 <strong>멜로디 디자인</strong> 위주로 참여하고, <strong>작사(가사)는 현식의 이야기</strong>로 채워 가며 진행.
+        </p>
+        <div class="step"><span class="step-arrow">→</span><span>장르 하나 골라 파고들기 — <b>시리즈마다 장르는 바뀜</b></span></div>
+        <div class="step"><span class="step-arrow">→</span><span>그 장르가 어떤 <b>의미·맥락</b>인지 공부하며 이해하기</span></div>
+        <div class="step"><span class="step-arrow">→</span><span>완성곡 공개</span></div>
+      </div>
+    </div>
+    <div class="detail-box" style="background:#fff; margin-top: 1.5rem;">
+      <div class="detail-box-label">장르 예시</div>
+      <div class="detail-box-content">
+        <div class="ep-badges">
+          <span class="ep-badge" style="background:#FFE030;">락발라드</span>
+          <span class="ep-badge" style="background:#FFD4A8;">밴드 발라드</span>
+          <span class="ep-badge" style="background:#E0E8FF;">모던록</span>
+          <span class="ep-badge" style="background:#FFD6E8;">얼터너티브 R&amp;B</span>
+          <span class="ep-badge" style="background:#E0FFE8;">감성힙합</span>
+          <span class="ep-badge" style="background:#fff;">시티팝</span>
+          <span class="ep-badge" style="background:#E8E0FF;">드림팝</span>
+          <span class="ep-badge" style="background:#D6F0FF;">퓨처베이스</span>
+          <span class="ep-badge" style="background:#F5E0FF;">일렉트로 팝</span>
+          <span class="ep-badge" style="background:#E4EBE8;">앰비언트 팝</span>
+        </div>
+      </div>
+    </div>
+    <div class="detail-box" style="background:#fff; margin-top: 1.5rem;">
+      <div class="detail-box-label">비주얼 레퍼런스</div>
+      <div class="detail-box-content">
+        <p style="font-size:12.5px;font-weight:700;color:#555;margin-bottom:12px;line-height:1.65;">
+          <b>작업실·스튜디오</b>에서 트랙이 쌓여 가는 톤 — DAW·콘솔·보컬부스가 함께 보이는 <b>음악 제작</b> 화면·라이팅 레퍼런스.
+        </p>
+        <div class="cp-ref-row">
+          <figure>
+            <img src="assets/images/page-04-content02-songmaking/songmaking-ref-a.webp" alt="레퍼런스: 홈스튜디오에서 프로듀싱·DAW 작업" width="1920" height="1204" loading="lazy" decoding="async">
+          </figure>
+          <figure>
+            <img src="assets/images/page-04-content02-songmaking/songmaking-ref-b.webp" alt="레퍼런스: 레코딩 스튜디오 콘솔과 보컬부스" width="1920" height="1204" loading="lazy" decoding="async">
+          </figure>
+        </div>
+      </div>
+    </div>
+    <div class="detail-box" style="background:var(--yellow); margin-top: 1.5rem;">
+      <div class="detail-box-label" style="background:var(--pink); color:#fff; border-color:var(--black);">포인트</div>
+      <div class="detail-box-content">현식이 "곡 진짜 배우고 싶어요"라고 했음 🎵</div>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 5: 03 현식의 서사 -->
+<section class="page content-page">
+  <div class="cp-left bg-blue-light">
+    <div class="cp-num">CONTENT 03 / 04</div>
+    <div class="cp-title">현식이<br>겪어온<br>것들</div>
+    <p class="cp-desc">
+      연습생, 프듀X, 군대, 데뷔까지.<br>
+      그 시간들을 통해 쌓인 현식만의 시각과 감각을<br>
+      <strong>길거리 인터뷰</strong>로 끌어내는 콘텐츠.<br>
+      회차마다 <strong>에피 포맷</strong>을 정해두고, 대본은 얇게·토크는 두껍게.
+    </p>
+    <div class="cp-tags">
+      <span class="ctag">인터뷰</span>
+      <span class="ctag">길거리</span>
+      <span class="ctag">에피 포맷</span>
+      <span class="ctag">경험 기반</span>
+      <span class="ctag">현식 시각</span>
+      <span class="ctag">가볍고 재밌게</span>
+    </div>
+  </div>
+  <div class="cp-right" style="background:#E4EEFF;">
+    <div class="detail-box" style="background:#fff;">
+      <div class="detail-box-label">형식</div>
+      <div class="detail-box-content">
+        <div class="step"><span class="step-arrow">→</span><span><b>로케</b> 정하기 — 편의점 앞·골목·노포 야장 등 <b>길거리 토크 허브</b></span></div>
+        <div class="step"><span class="step-arrow">→</span><span>그날의 <b>에피 포맷</b>·질문 리스트 짧게 공유 (아래 예시 중 하나 골라 가기)</span></div>
+        <div class="step"><span class="step-arrow">→</span><span><b>인터뷰</b>로 키워드 따라 에피소드·반응 캐묻기</span></div>
+        <div class="step"><span class="step-arrow">→</span><span>숏/썸네일용 <b>한 마디 결론</b>으로 마무리</span></div>
+      </div>
+    </div>
+    <div class="detail-box" style="background:#fff; margin-top: 1.5rem;">
+      <div class="detail-box-label">바탕이 되는 경험들</div>
+      <div class="detail-box-content">
+        <div class="ep-badges">
+          <span class="ep-badge" style="background:#E0E8FF;">연습생 시절</span>
+          <span class="ep-badge" style="background:#FFE030;">프듀X</span>
+          <span class="ep-badge" style="background:#FFD6E8;">군대</span>
+          <span class="ep-badge" style="background:#E0FFE8;">데뷔 후 아이돌 생활</span>
+        </div>
+      </div>
+    </div>
+    <div class="detail-box" style="background:#fff; margin-top: 1.5rem;">
+      <div class="detail-box-label">에피 포맷 예시</div>
+      <div class="detail-box-content">
+        <div class="step"><span class="step-arrow">①</span><span><b>아이돌이라 처음 알게 된 것 Top 5</b> — 진짜 몰랐던 것만, 숫자 매기며 가볍게</span></div>
+        <div class="step"><span class="step-arrow">②</span><span><b>그때 vs 지금 단어 모음</b> — 연습생·프듀·군대·데뷔 후, 같은 주제로 표현만 바꿔 말하기</span></div>
+        <div class="step"><span class="step-arrow">③</span><span><b>처음엔 이해 안 갔던 것</b> — 군대·스케줄·팬사인 등, “처음엔 ???였음” 토크</span></div>
+        <div class="step"><span class="step-arrow">④</span><span><b>지금도 쓰는 생존 루틴</b> — 아이돌로 살아남는 소소한 습관·꿀팁 캐물기</span></div>
+      </div>
+    </div>
+    <div class="detail-box" style="background:#fff; margin-top: 1.5rem;">
+      <div class="detail-box-label">비주얼 레퍼런스</div>
+      <div class="detail-box-content">
+        <div class="cp-ref-row">
+          <figure>
+            <img src="assets/images/page-05-content03-story/story-ref-a.webp" alt="레퍼런스: 편의점 앞 길거리 인터뷰 톤" width="1920" height="1204" loading="lazy" decoding="async">
+          </figure>
+          <figure>
+            <img src="assets/images/page-05-content03-story/story-ref-b.webp" alt="레퍼런스: 노포 야장 토크" width="1920" height="1204" loading="lazy" decoding="async">
+          </figure>
+        </div>
+      </div>
+    </div>
+    <div class="detail-box" style="background:var(--blue); margin-top: 1.5rem;">
+      <div class="detail-box-label" style="background:var(--black); color:var(--yellow); border-color:var(--black);">포인트</div>
+      <div class="detail-box-content" style="color:#fff;">「어떻게 찍어요?」에 답이 되게 <b>회차 포맷</b>을 박아 두고, 대본은 얇게·토크는 두껍게. 분위기 따라 간단한 한 잔도 OK.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 6: 04 드라이브 / 출사 / 여행 -->
+<section class="page content-page page-last">
+  <div class="cp-left bg-green-light">
+    <div class="cp-num">CONTENT 04 / 04</div>
+    <div class="cp-title">드라이브<br>출사<br>여행</div>
+    <p class="cp-umbrella">한 줄 콘셉트 · <strong>현식이 일단 나감</strong> — 예고 없이 출발</p>
+    <p class="cp-desc">
+      <strong>드라이브·출사·여행</strong>은 각각 다른 쇼처럼 기획되지만, 겉제목은 이거 하나로 묶임.<br>
+      “오늘 뭐 해요?”가 아니라 <strong>일단 밖으로 나가면 생기는 일</strong>을 찍는 시리즈.<br>
+      <strong>로드트립·첫 출사·여행</strong>으로 <strong>현식이 좋아하는 것·스타일</strong>이 드러나게.
+    </p>
+    <div class="cp-tags">
+      <span class="ctag">일단 나감</span>
+      <span class="ctag">로드트립</span>
+      <span class="ctag">야외 촬영</span>
+      <span class="ctag">요즘 트렌드</span>
+      <span class="ctag">장롱면허</span>
+      <span class="ctag">자유로운 현식</span>
+    </div>
+  </div>
+  <div class="cp-right" style="background:#D6F5E5;">
+    <div class="detail-box" style="background:#fff;">
+      <div class="detail-box-label">세 가지 쇼 · 한 줄로 묶기</div>
+      <div class="detail-box-content">
+        <p style="font-size:12.5px;font-weight:700;color:#333;margin-bottom:10px;line-height:1.65;">
+          아래 세 줄은 <b>포맷이 다른 콘텐츠</b>지만, 모두 <b>「현식이 일단 나감」</b> 아래에 걸려 있음 — 기획안 볼 때 <b>이 중에 뭐 하냐</b>가 아니라 <b>오늘은 밖으로 나간다</b>가 먼저.
+        </p>
+        <div class="step"><span class="step-arrow">🚗</span><span><b>드라이브</b> — 장롱면허 도전, 라디오 DJ 콘셉트, 야간 서울 탐방</span></div>
+        <div class="step"><span class="step-arrow">📷</span><span><b>출사</b> — 사진 처음 배우기, 좋아하는 동네 찍기</span></div>
+        <div class="step"><span class="step-arrow">✈️</span><span><b>여행</b> — 혼자 못 가봤던 곳, 아이돌이 여행 가면 생기는 일</span></div>
+      </div>
+    </div>
+    <div class="detail-box" style="background:#fff; margin-top: 1.5rem;">
+      <div class="detail-box-label">02번이랑 연결하면</div>
+      <div class="detail-box-content">장르 뿌리 찾으러 레코드샵 투어 → 드라이브 + 음악 메이킹 합체 가능</div>
+    </div>
+    <div class="detail-box" style="background:#fff; margin-top: 1.5rem;">
+      <div class="detail-box-label">비주얼 레퍼런스</div>
+      <div class="detail-box-content">
+        <p style="font-size:12.5px;font-weight:700;color:#555;margin-bottom:12px;line-height:1.65;">
+          낮·야간 <b>드라이브·로드트립</b> 톤 — 캐주얼 브이로그·밴 안 단체 샷 등.
+        </p>
+        <div class="cp-ref-row">
+          <figure>
+            <img src="assets/images/page-06-content04-outdoor/outdoor-ref-a.webp" alt="레퍼런스: 오픈카·주간 드라이브 브이로그 톤" width="1920" height="1204" loading="lazy" decoding="async">
+          </figure>
+          <figure>
+            <img src="assets/images/page-06-content04-outdoor/outdoor-ref-b.webp" alt="레퍼런스: 야간 밴·로드트립 단체 샷" width="1920" height="1204" loading="lazy" decoding="async">
+          </figure>
+        </div>
+      </div>
+    </div>
+    <div class="detail-box" style="background:var(--yellow); margin-top: 1.5rem;">
+      <div class="detail-box-label" style="background:var(--black); color:var(--yellow); border-color:var(--black);">현식 왈</div>
+      <div class="detail-box-content">"장롱인데 시작하면 되는 거죠" 🚗</div>
+    </div>
+  </div>
+  <footer>
+    <span>THE WAVES × MBC STUDIO 596 × HYUNSIK</span>
+    <span>2026</span>
+  </footer>
+</section>
+
+</div>
+</body>
+</html>
