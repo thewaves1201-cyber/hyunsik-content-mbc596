@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>OG — 아이돌, 세상에 나가다</title>
+  </head>
+  <body>
+    <!--
+      링크 공유 썸네일(og-share.png) 생성용 — S1 타이틀 슬라이드와 동일 구성
+      생성: Chrome headless 1200×630 스크린샷 → og-share.png
+    -->
+    <div class="og">
+      <div class="bg-grid"></div>
+      <div class="road"></div>
+      <span class="ficon f-car">🚗</span>
+      <span class="ficon f-bike">🚴</span>
+      <span class="ficon f-camp">⛺</span>
+      <span class="ficon f-note">🎵</span>
+      <div class="inner">
+        <span class="hero-project">Road Music Project</span>
+        <div class="stamp">STUDIO 596 ORIGINAL · 2026</div>
+        <h1 class="mtitle">아이돌,<br /><em class="hl">세상에</em><br />나가다</h1>
+        <p class="hname">첫 번째 편: XODIAC 현식 편</p>
+      </div>
+    </div>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+      body {
+        font-family: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      }
+      .og {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        background: #fefcf3;
+        overflow: hidden;
+      }
+      .bg-grid {
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(rgba(45, 45, 45, 0.07) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(45, 45, 45, 0.07) 1px, transparent 1px);
+        background-size: 40px 40px;
+      }
+      .road {
+        position: absolute;
+        bottom: 14%;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: repeating-linear-gradient(
+          90deg,
+          #2d2d2d 0,
+          #2d2d2d 24px,
+          transparent 24px,
+          transparent 44px
+        );
+      }
+      .ficon {
+        position: absolute;
+        opacity: 0.75;
+        filter: drop-shadow(2px 3px 0 rgba(0, 0, 0, 0.12));
+      }
+      .f-car {
+        font-size: 2.2rem;
+        bottom: 10%;
+        left: 5%;
+      }
+      .f-bike {
+        font-size: 2.2rem;
+        bottom: 10%;
+        right: 5%;
+      }
+      .f-camp {
+        font-size: 1.8rem;
+        top: 11%;
+        right: 6%;
+      }
+      .f-note {
+        font-size: 1.6rem;
+        top: 12%;
+        left: 6%;
+      }
+      .inner {
+        position: relative;
+        z-index: 2;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 18px;
+        padding: 40px;
+      }
+      .hero-project {
+        font-size: 0.95rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        padding: 8px 22px;
+        border: 2px solid #2d2d2d;
+        border-radius: 24px;
+        background: #fff;
+        box-shadow: 3px 3px 0 #2d2d2d;
+        color: #1a1a2e;
+      }
+      .stamp {
+        display: inline-block;
+        background: #1a1a2e;
+        color: #fff;
+        border: 2px solid #2d2d2d;
+        border-radius: 4px;
+        padding: 6px 18px;
+        font-size: 0.9rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        transform: rotate(-1.5deg);
+        box-shadow: 4px 4px 0 #2d2d2d;
+      }
+      .mtitle {
+        font-size: 5.4rem;
+        font-weight: 900;
+        line-height: 1.05;
+        color: #1a1a2e;
+      }
+      .mtitle .hl {
+        -webkit-text-stroke: 3px #2d2d2d;
+        color: #ffd93d;
+        font-style: normal;
+      }
+      .hname {
+        font-size: 1.65rem;
+        font-weight: 900;
+        color: #ff85a2;
+      }
+    </style>
+  </body>
+</html>
