@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>아이돌, 세상에 나가다 — MBC Studio 596</title>
+<style>
+/* ==================== TOKENS ==================== */
+:root {
+  --cream:#FEFCF3; --dark:#1A1A2E; --yellow:#FFD93D;
+  --pink:#FF85A2; --blue:#5BC4D8; --green:#85D5B0;
+  --b:#2D2D2D; --gray:#6B6B6B; --lgray:#E8E5DC;
+  --sh:4px 4px 0 #2D2D2D; --sh2:6px 6px 0 #2D2D2D;
+  --svh:100vh;
+}
+/* ==================== RESET ==================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:#000}
+a{text-decoration:none;color:inherit}
+
+/* ==================== SCROLL-SNAP WRAPPER ==================== */
+.deck{
+  height:var(--svh);
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.deck::-webkit-scrollbar{display:none}
+
+/* ==================== SLIDE BASE ==================== */
+.slide{
+  height:var(--svh);
+  width:100%;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  padding:52px 20px 24px;
+}
+.slide-body{
+  width:100%;max-width:860px;
+  display:flex;flex-direction:column;gap:clamp(14px,2.5vh,24px);
+}
+
+/* ==================== TOP BAR ==================== */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  height:48px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;
+  background:rgba(26,26,46,0.85);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.topbar-brand{font-size:.72rem;font-weight:700;color:rgba(255,255,255,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:55%}
+.topbar-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.slide-num{font-size:.65rem;color:rgba(255,255,255,.3)}
+.mode-tag{padding:2px 9px;border-radius:12px;font-size:.62rem;font-weight:800;letter-spacing:.05em}
+.mode-mgmt{background:var(--blue);color:#fff}
+.mode-spon{background:var(--pink);color:#fff}
+
+/* ==================== NAV DOTS ==================== */
+.nav-dots{
+  position:fixed;right:10px;top:50%;transform:translateY(-50%);
+  z-index:800;display:flex;flex-direction:column;gap:6px;
+}
+.dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,.25);border:1.5px solid rgba(255,255,255,.2);
+  cursor:pointer;transition:all .25s;
+}
+.dot.on{background:var(--yellow);border-color:var(--yellow);transform:scale(1.5)}
+
+/* ==================== ANIM BASE ==================== */
+.ai{
+  opacity:0;transform:translateY(28px);
+  transition:opacity .55s ease,transform .55s ease;
+}
+.slide.on .ai{opacity:1;transform:translateY(0)}
+.slide.on .ai:nth-child(1){transition-delay:.00s}
+.slide.on .ai:nth-child(2){transition-delay:.08s}
+.slide.on .ai:nth-child(3){transition-delay:.16s}
+.slide.on .ai:nth-child(4){transition-delay:.24s}
+.slide.on .ai:nth-child(5){transition-delay:.32s}
+.slide.on .ai:nth-child(6){transition-delay:.40s}
+.slide.on .ai:nth-child(7){transition-delay:.48s}
+.slide.on .ai:nth-child(8){transition-delay:.56s}
+.slide.on .ai:nth-child(9){transition-delay:.64s}
+.slide.on .ai:nth-child(10){transition-delay:.72s}
+
+.ap{opacity:0;transform:scale(.85);transition:opacity .5s,transform .5s cubic-bezier(.34,1.56,.64,1)}
+.slide.on .ap{opacity:1;transform:scale(1)}
+.slide.on .ap:nth-child(1){transition-delay:.05s}
+.slide.on .ap:nth-child(2){transition-delay:.12s}
+.slide.on .ap:nth-child(3){transition-delay:.19s}
+.slide.on .ap:nth-child(4){transition-delay:.26s}
+.slide.on .ap:nth-child(5){transition-delay:.33s}
+.slide.on .ap:nth-child(6){transition-delay:.40s}
+.slide.on .ap:nth-child(7){transition-delay:.47s}
+.slide.on .ap:nth-child(8){transition-delay:.54s}
+
+/* ==================== SHARED ==================== */
+.stag{display:inline-block;border:2px solid currentColor;border-radius:3px;padding:2px 10px;font-size:.62rem;font-weight:800;letter-spacing:.1em;margin-bottom:12px}
+.sh{font-size:clamp(1.8rem,6vw,3.5rem);font-weight:900;line-height:1.1;margin-bottom:12px}
+.sb{font-size:clamp(.82rem,2vw,1rem);line-height:1.75;opacity:.65;max-width:680px;margin:0 auto}
+
+/* ==================== S1: TITLE ==================== */
+#s1{background:var(--cream)}
+#s1 .bg-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(45,45,45,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(45,45,45,.07) 1px,transparent 1px);
+  background-size:40px 40px;
+  animation:gridMove 22s linear infinite;
+}
+@keyframes gridMove{from{background-position:0 0}to{background-position:40px 40px}}
+.road{
+  position:absolute;bottom:14%;left:0;right:0;height:3px;
+  background:repeating-linear-gradient(90deg,var(--b) 0,var(--b) 24px,transparent 24px,transparent 44px);
+  animation:roadScroll 1.8s linear infinite;
+}
+@keyframes roadScroll{to{transform:translateX(88px)}}
+.ficon{position:absolute;pointer-events:none;z-index:1;opacity:.85;
+  filter:drop-shadow(2px 3px 0 rgba(0,0,0,.12))}
+.f-car {font-size:clamp(1.4rem,4vw,2.6rem);bottom:10%;left:4%;animation:carLR 7s ease-in-out infinite}
+.f-bike{font-size:clamp(1.4rem,4vw,2.6rem);bottom:10%;right:4%;animation:bikeRL 9s ease-in-out infinite 1s}
+.f-camp{font-size:clamp(1.2rem,3vw,2rem);top:11%;right:5%;animation:floatY 5s ease-in-out infinite .5s}
+.f-note{font-size:clamp(1.1rem,2.5vw,1.8rem);top:12%;left:5%;animation:floatY 6s ease-in-out infinite 2s}
+.f-st1 {font-size:1rem;top:20%;left:10%;animation:twinkle 3s ease-in-out infinite}
+.f-st2 {font-size:.8rem;top:24%;right:10%;animation:twinkle 3s ease-in-out infinite 1.2s}
+@keyframes carLR  {0%,100%{transform:translateX(-22px)}50%{transform:translateX(22px)}}
+@keyframes bikeRL {0%,100%{transform:translateX(18px) scaleX(-1)}50%{transform:translateX(-18px) scaleX(-1)}}
+@keyframes floatY {0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.8) rotate(0)}50%{opacity:1;transform:scale(1.2) rotate(180deg)}}
+
+#s1.slide{
+  align-items:center;justify-content:center;
+  padding:52px 24px 80px;
+  overflow:hidden;
+}
+#s1 .inner{
+  position:relative;z-index:3;text-align:center;
+  display:flex;flex-direction:column;justify-content:center;
+  flex:0 1 auto;width:100%;max-width:460px;margin:0 auto;
+  min-height:auto;padding:0;
+  gap:clamp(12px,2vh,20px);
+}
+.s1-top,.s1-head,.s1-mid,.s1-foot{
+  display:flex;flex-direction:column;align-items:center;
+  gap:clamp(8px,1.4vh,14px);width:100%;
+}
+.s1-top{gap:clamp(6px,1vh,10px)}
+.s1-mid{gap:clamp(10px,1.6vh,14px)}
+#s1 .s1-foot{
+  margin-top:2px;
+  padding-bottom:10px;
+}
+.hero-project{
+  font-size:.62rem;font-weight:800;letter-spacing:.1em;
+  padding:4px 14px;border:1.5px solid var(--b);border-radius:20px;
+  background:#fff;box-shadow:2px 2px 0 var(--b);color:var(--dark);
+}
+.stamp{
+  display:inline-block;background:var(--dark);color:#fff;
+  border:2px solid var(--b);border-radius:3px;padding:3px 13px;
+  font-size:.64rem;font-weight:800;letter-spacing:.1em;
+  transform:rotate(-1.5deg);box-shadow:var(--sh);margin-bottom:0;
+}
+.mtitle{
+  font-size:clamp(2.6rem,12vw,7rem);font-weight:900;line-height:1;
+  color:var(--dark);margin-bottom:0;
+}
+.mtitle .hl{-webkit-text-stroke:2px var(--b);color:var(--yellow)}
+.hname{font-size:clamp(1rem,3.2vw,1.6rem);font-weight:900;color:var(--pink);margin-bottom:0}
+.hdesc{font-size:clamp(.78rem,1.8vw,.92rem);color:var(--gray);line-height:1.65;margin-bottom:0}
+.hero-spec{
+  font-size:clamp(.68rem,1.6vw,.78rem);font-weight:800;color:var(--dark);
+  letter-spacing:.04em;padding:6px 0;
+}
+.hero-quote{
+  font-size:clamp(.72rem,1.6vw,.85rem);color:var(--dark);font-weight:700;
+  line-height:1.65;width:100%;max-width:100%;margin:0;
+  padding:12px 14px;border:2px dashed var(--b);border-radius:8px;
+  background:rgba(255,217,61,.25);
+}
+.scroll-hint{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:.7rem;color:var(--gray);font-weight:600;line-height:1.45;
+  padding:0 8px;animation:hintB 2s ease-in-out infinite;
+}
+#s1 .road{bottom:40px;z-index:1}
+#s1 .rdiv{bottom:24px;z-index:1}
+#s1 .f-car,#s1 .f-bike{bottom:46px;z-index:2}
+@keyframes hintB{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* ==================== S2: CONCEPT ==================== */
+#s2{background:var(--dark)}
+#s2 .concept-inner{
+  transform:translateY(18px);
+  width:100%;max-width:860px;text-align:center;margin:0 auto;
+}
+#s2 .cbig{margin-bottom:28px}
+#s2 .sb{
+  margin-top:0;margin-bottom:30px;
+  color:rgba(255,255,255,.65);line-height:1.85;
+}
+#s2 .krow{margin-top:0;margin-bottom:28px;gap:12px}
+#s2 .definition-box{
+  margin-top:6px;margin-left:auto;margin-right:auto;
+  padding:14px 24px;max-width:760px;
+  background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.15);
+  border-radius:10px;font-size:clamp(.78rem,1.8vw,.88rem);
+  color:rgba(255,255,255,.75);line-height:1.75;
+}
+.cbig{font-size:clamp(2rem,7vw,4.2rem);font-weight:900;line-height:1.1;color:#fff;margin-bottom:16px}
+.cbig em{font-style:normal;color:var(--yellow)}
+.krow{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:20px}
+.kpill{
+  display:flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.18);
+  border-radius:28px;padding:7px 14px;font-size:.82rem;font-weight:700;color:#fff;
+  cursor:default;transition:all .25s;
+}
+.kpill:hover{background:rgba(255,255,255,.14);border-color:var(--yellow)}
+.oneliner{
+  margin-top:16px;padding:12px 16px;
+  background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.15);
+  border-radius:10px;font-size:clamp(.78rem,1.8vw,.88rem);color:rgba(255,255,255,.75);line-height:1.75;
+}
+
+/* ==================== S3: WHY HYUNSIK ==================== */
+#s3{background:var(--cream)}
+#s3.slide{align-items:flex-start;overflow-y:auto}
+.s3-layout{width:100%;max-width:920px;text-align:center}
+.s3-visual-wrap{
+  width:fit-content;max-width:100%;margin:0 auto 16px;zoom:.6;
+}
+@supports not (zoom:1){
+  .s3-visual-wrap{
+    zoom:unset;transform:scale(.6);transform-origin:top center;
+    margin-bottom:calc(-40% + 8px);
+  }
+}
+.s3-visual-frame{
+  position:relative;width:min(540px,94vw);
+  background:#fffdf8;border:2px solid var(--b);border-radius:14px;
+  padding:18px 16px 20px;box-shadow:6px 6px 0 var(--b);
+  transform:rotate(-1deg);text-align:left;
+}
+.s3-visual-frame::before{
+  content:'';position:absolute;top:-10px;left:50%;
+  transform:translateX(-50%) rotate(-3deg);
+  width:64px;height:20px;
+  background:rgba(255,217,61,.78);border:1px solid rgba(45,45,45,.22);
+  border-radius:3px;z-index:2;box-shadow:0 1px 0 rgba(0,0,0,.06);
+}
+.s3-visual-frame .frame-photo{
+  border:2px solid var(--b);border-radius:10px;overflow:hidden;background:#111;
+}
+.s3-visual-frame .frame-photo img{
+  display:block;width:100%;aspect-ratio:2/1;
+  object-fit:cover;object-position:center center;
+}
+.s3-visual-frame .frame-caption{margin-top:14px;padding:0 2px}
+.s3-visual-frame .frame-label{
+  display:inline-block;font-size:.58rem;font-weight:900;
+  padding:3px 9px;border:1.5px solid var(--b);border-radius:999px;
+  background:var(--yellow);margin-bottom:7px;letter-spacing:.02em;
+}
+.s3-visual-frame .frame-quote{
+  font-size:clamp(.82rem,2vw,.92rem);font-weight:800;line-height:1.45;color:var(--dark);
+  font-family:'Bradley Hand','Segoe Print','Apple Chancery',cursive;
+}
+.hero-photos{
+  display:flex;justify-content:center;align-items:flex-end;
+  gap:clamp(10px,3vw,24px);margin:6px auto 12px;padding:0 4px;
+}
+.hero-cutout{
+  flex:0 1 auto;width:clamp(100px,28vw,200px);
+  transform:rotate(-4deg);transition:transform .25s;
+}
+.hero-cutout:hover{transform:rotate(-2deg) translateY(-4px)}
+.hero-cutout.cut-right{transform:rotate(5deg);margin-bottom:8px}
+.hero-cutout.cut-right:hover{transform:rotate(3deg) translateY(-4px)}
+.hero-cutout img{
+  display:block;width:100%;height:auto;
+  max-height:clamp(120px,28vh,200px);
+  object-fit:contain;object-position:center bottom;
+}
+.wgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px;width:100%;max-width:860px}
+.wgrid3{grid-template-columns:repeat(3,1fr)}
+.wcard{
+  background:#fff;border:2.5px solid var(--b);border-radius:14px;padding:16px;
+  box-shadow:3px 3px 0 var(--b);text-align:left;
+  cursor:default;transition:transform .2s,box-shadow .2s;
+}
+.wcard:hover{transform:translate(-2px,-2px);box-shadow:var(--sh2)}
+.wcard .wi{font-size:1.5rem;display:block;margin-bottom:5px}
+.wcard h3{font-size:.85rem;font-weight:900;margin-bottom:4px}
+.wcard p{font-size:.75rem;color:var(--gray);line-height:1.6}
+.wcard.wide{grid-column:1/-1;background:var(--yellow)}
+.wcard.wide p{color:var(--dark)}
+.wsub{font-size:.78rem;color:var(--gray);margin:-4px auto 14px;max-width:640px;line-height:1.6}
+.s3-intro{
+  max-width:680px;margin:0 auto 16px;text-align:left;
+  display:flex;flex-direction:column;gap:12px;
+}
+.s3-intro p{
+  font-size:clamp(.76rem,1.7vw,.86rem);color:var(--gray);line-height:1.75;
+}
+.wgrid4{grid-template-columns:repeat(2,1fr);margin-top:14px}
+.kw-row{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:16px;max-width:720px;margin-left:auto;margin-right:auto}
+.kw-chip{font-size:.6rem;font-weight:700;padding:4px 10px;background:var(--yellow);border:1.5px solid var(--b);border-radius:14px}
+.live-row{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-top:14px}
+.live-chip{font-size:.6rem;font-weight:700;padding:3px 9px;background:var(--cream);border:1.5px solid var(--b);border-radius:14px}
+.tlrow{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-top:8px}
+.tlchip{font-size:.58rem;font-weight:800;padding:3px 8px;background:var(--yellow);border:1.5px solid var(--b);border-radius:3px}
+
+/* ==================== S4: FORMAT ==================== */
+#s4{background:var(--dark)}
+#s4 .format-inner{width:100%;max-width:820px;text-align:center;margin:0 auto}
+#s4 .fmt-lead{
+  font-size:clamp(.78rem,1.8vw,.88rem);color:rgba(255,255,255,.55);
+  line-height:1.65;max-width:560px;margin:0 auto 22px;
+}
+#s4 .fmt-lead-b{display:inline}
+.fmt-road-wrap{
+  position:relative;margin:0 auto 8px;max-width:780px;padding:8px 0;
+}
+.fmt-road-wrap::before{
+  content:'';position:absolute;top:50%;left:4%;right:4%;height:2px;transform:translateY(-50%);
+  background:repeating-linear-gradient(90deg,rgba(255,217,61,.22) 0,rgba(255,217,61,.22) 14px,transparent 14px,transparent 28px);
+  z-index:0;pointer-events:none;
+}
+.fmt-road-wrap::after{
+  content:'';position:absolute;inset:6px 8px;border:1px dashed rgba(255,255,255,.08);
+  border-radius:16px;z-index:0;pointer-events:none;
+}
+.fmtg{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+  width:100%;max-width:780px;margin:0 auto;
+}
+.fmtc{
+  background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.1);
+  border-radius:14px;padding:14px 8px 12px;text-align:center;
+  transition:background .25s,border-color .25s,transform .2s;
+}
+.fmtc:hover{background:rgba(255,255,255,.1);border-color:rgba(255,217,61,.45);transform:translateY(-2px)}
+.fmt-icon{font-size:.95rem;line-height:1;margin-bottom:6px;opacity:.9}
+.fmtn{font-size:clamp(1.5rem,5vw,2.4rem);font-weight:900;color:var(--yellow);line-height:1;display:flex;align-items:baseline;justify-content:center;gap:1px}
+.fmt-plus{font-size:clamp(1rem,3vw,1.4rem);font-weight:900;color:var(--yellow);vertical-align:top}
+.fmtu{font-size:.72rem;font-weight:700;color:rgba(255,255,255,.55);margin-top:4px}
+.fmtl{font-size:.62rem;color:rgba(255,255,255,.32);margin-top:2px}
+.fmt-flow{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:4px 6px;margin-top:20px;padding:8px 12px;
+  border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);
+  max-width:620px;margin-left:auto;margin-right:auto;
+}
+.fmt-flow span{font-size:.62rem;font-weight:700;color:rgba(255,255,255,.45);letter-spacing:.03em}
+.fmt-flow .arr{color:var(--yellow);font-size:.7rem;font-weight:900}
+.fmt-flow .flow-ko{display:block;width:100%;font-size:.58rem;color:rgba(255,255,255,.28);margin-top:4px;letter-spacing:.02em}
+.fmt-footer{
+  margin:18px auto 0;max-width:620px;padding:12px 16px 12px 14px;
+  border-left:3px solid var(--yellow);
+  background:rgba(255,217,61,.08);
+  font-size:clamp(.76rem,1.7vw,.86rem);font-weight:700;
+  color:rgba(255,255,255,.72);line-height:1.65;text-align:left;
+}
+
+/* ==================== S5: EPISODES ==================== */
+#s5{background:#f4efe0}
+.epg{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:16px;width:100%;max-width:820px}
+.emini{
+  background:#fff;border:2px solid var(--b);border-radius:11px;padding:10px 6px;
+  text-align:center;cursor:pointer;transition:all .2s;
+  box-shadow:2px 2px 0 var(--b);
+}
+.emini:hover,.emini:active{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--b);background:var(--yellow)}
+.emini .ei{font-size:clamp(1.3rem,4.5vw,2rem);margin-bottom:3px}
+.emini .en{font-size:.55rem;font-weight:800;color:var(--gray);text-transform:uppercase}
+.emini .et{font-size:.62rem;font-weight:700;color:var(--dark);margin-top:2px;line-height:1.2}
+.emodal-top{
+  display:flex;align-items:flex-start;gap:12px;
+  margin-bottom:8px;padding-right:38px;
+}
+.emodal-main{flex:1;min-width:0}
+.emodal-shots{
+  flex-shrink:0;display:flex;flex-direction:column;gap:8px;
+  align-items:flex-end;margin:0;padding-top:20px;
+}
+.emodal-shots:empty{display:none}
+.emodal-ref{
+  width:116px;padding:4px 4px 5px;
+  background:#fff9c4;border:1.5px solid var(--b);border-radius:5px;
+  box-shadow:3px 3px 0 var(--b);transform:rotate(-2deg);
+}
+.emodal-ref.ref-b{transform:rotate(2.5deg);background:#fffef5}
+.emodal-ref img{
+  display:block;width:100%;aspect-ratio:16/9;object-fit:cover;
+  object-position:center;border-radius:3px;border:1px solid var(--b);
+}
+.ep-hint{
+  display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  margin:16px auto 0;max-width:480px;padding:8px 14px;
+  font-size:clamp(.62rem,1.35vw,.72rem);font-weight:700;color:var(--dark);line-height:1.45;
+  background:#fff;border:2px dashed var(--b);border-radius:999px;
+  box-shadow:2px 2px 0 var(--b);
+  animation:epHintB 2.2s ease-in-out infinite;
+}
+.ep-hint-ico{font-size:.88rem;line-height:1;flex-shrink:0}
+@keyframes epHintB{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+/* Episode modal */
+.emodal-bg{
+  position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:950;
+  display:none;align-items:flex-end;justify-content:center;
+}
+.emodal-bg.open{display:flex}
+.emodal{
+  background:#fff;border:2.5px solid var(--b);
+  border-radius:22px 22px 0 0;padding:34px 32px 38px;
+  width:100%;max-width:1000px;box-shadow:0 -10px 0 var(--b);
+  position:relative;max-height:88vh;overflow-y:auto;
+  animation:slideUp .3s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.emodal-close{
+  position:absolute;top:14px;right:14px;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--lgray);border:2px solid var(--b);
+  font-size:.9rem;font-weight:900;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.emodal-ep{font-size:.65rem;font-weight:800;color:var(--gray);margin-bottom:4px}
+.emodal-icon{font-size:2.4rem;margin-bottom:6px}
+.emodal-title{font-size:1.15rem;font-weight:900;margin-bottom:10px}
+.emodal-body{font-size:.83rem;color:var(--gray);line-height:1.75;margin-bottom:12px}
+
+/* ==================== S6: LIVE CLIPS ==================== */
+#s6{background:#0c0c1e}
+#s6 .s6-inner{text-align:center;max-width:540px;width:100%;margin:0 auto}
+#s6 .lcsub,
+#s6 .cass-sub,
+#s6 .clipc .cs,
+#s6 .s6-shots-lbl{color:#fff}
+.cass{
+  background:#12122a;border:2.5px solid rgba(255,255,255,.14);
+  border-radius:16px;padding:16px 20px;max-width:420px;width:100%;margin:0 auto 18px;
+}
+.reels{display:flex;justify-content:center;gap:42px;margin-bottom:11px}
+.reel{
+  width:40px;height:40px;border-radius:50%;
+  border:3px solid rgba(255,255,255,.2);position:relative;
+  animation:rspin 2.5s linear infinite;
+}
+.reel::after{
+  content:'';position:absolute;top:50%;left:50%;
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(255,255,255,.45);transform:translate(-50%,-50%);
+}
+.reel.r2{animation-direction:reverse;animation-duration:3.2s}
+@keyframes rspin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.tape{height:3px;background:linear-gradient(90deg,#0c0c1e,rgba(255,255,255,.28),#0c0c1e);border-radius:2px;margin-bottom:9px}
+.cass-lbl{text-align:center;color:var(--yellow);font-size:.85rem;font-weight:900}
+.cass-sub{text-align:center;color:rgba(255,255,255,.35);font-size:.68rem;margin-top:2px}
+.clipg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:460px;margin:0 auto}
+.clipc{
+  background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);
+  border-radius:10px;padding:12px 6px;text-align:center;
+  transition:background .25s,border-color .25s;cursor:default;
+}
+.clipc:hover{background:rgba(255,255,255,.1);border-color:var(--yellow)}
+.clipc .ci{font-size:1.5rem;margin-bottom:5px}
+.clipc .cn{font-size:.72rem;font-weight:700;color:#fff}
+.clipc .cs{font-size:.58rem;color:rgba(255,255,255,.4);margin-top:3px;line-height:1.35}
+.lcsub{font-size:.72rem;color:rgba(255,255,255,.45);margin:-6px auto 14px;line-height:1.5;max-width:420px}
+.s6-shots{
+  width:100%;max-width:422px;margin:12px auto 0;
+}
+.s6-shots-lbl{
+  display:block;font-size:.52rem;font-weight:800;color:rgba(255,255,255,.4);
+  letter-spacing:.04em;margin:0 0 6px;text-align:center;
+}
+.s6-shots-row{
+  display:flex;flex-direction:row;flex-wrap:nowrap;gap:6px;
+  align-items:flex-start;justify-content:center;width:100%;
+}
+.s6-ref{
+  flex:0 0 auto;width:211px;padding:3px 3px 4px;
+  background:#fff9c4;border:1.5px solid var(--b);border-radius:4px;
+  box-shadow:2px 2px 0 var(--b);transform:rotate(-2deg);
+}
+.s6-ref.ref-b{transform:rotate(2.5deg);background:#fffef5}
+.s6-ref-media{
+  position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;
+  border-radius:2px;border:1px solid var(--b);background:#0a0a14;
+}
+.s6-ref-media img{
+  position:absolute;inset:0;display:block;width:100%;height:100%;
+  object-fit:cover;object-position:center;
+}
+.music-note{
+  font-size:.72rem;color:var(--gray);line-height:1.65;max-width:620px;margin:12px auto 0;
+  padding:10px 14px;background:#fff;border:1.5px solid var(--b);border-radius:8px;box-shadow:2px 2px 0 var(--b);
+}
+.emodal-tag{display:inline-block;font-size:.58rem;font-weight:800;letter-spacing:.08em;padding:2px 8px;border-radius:3px;background:var(--yellow);border:1.5px solid var(--b);margin-bottom:8px}
+.emodal-kw{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
+.emodal-kw span{font-size:.62rem;font-weight:700;padding:2px 8px;background:var(--cream);border:1px solid var(--b);border-radius:10px}
+
+@media(min-width:681px){
+  .emodal-bg{align-items:flex-end;padding:0}
+  .emodal-bg.open .emodal,
+  .emodal{
+    width:min(96vw,1200px);
+    max-width:1200px;
+    max-height:min(88vh,820px);
+    border-radius:22px 22px 0 0;
+    padding:52px 56px 56px;
+    box-shadow:0 -10px 0 var(--b);
+    animation:slideUp .38s cubic-bezier(.34,1.56,.64,1);
+  }
+  .emodal-close{top:24px;right:24px;width:42px;height:42px;font-size:1.15rem}
+  .emodal-ep{font-size:.9rem;margin-bottom:10px}
+  .emodal-tag{font-size:.82rem;padding:6px 16px;margin-bottom:14px}
+  .emodal-icon{font-size:4.2rem;margin-bottom:18px}
+  .emodal-title{
+    font-size:clamp(1.65rem,2.8vw,2.15rem);
+    line-height:1.32;margin-bottom:20px;
+  }
+  .emodal-body{
+    font-size:clamp(1rem,1.5vw,1.15rem);
+    line-height:1.88;margin-bottom:24px;
+  }
+  .emodal-kw{gap:10px;margin-top:20px;margin-bottom:0}
+  .emodal-kw span{font-size:.88rem;padding:7px 16px}
+  .emodal-top{padding-right:56px;margin-bottom:14px}
+  .emodal-shots{
+    flex-direction:row;flex-wrap:nowrap;align-items:flex-start;
+    gap:10px;padding-top:32px;
+  }
+  .emodal-ref{
+    width:243px;flex:0 0 auto;
+    padding:6px 6px 7px;border-radius:6px;box-shadow:4px 4px 0 var(--b);
+  }
+  #em-title .ep-mob-title-br{display:none}
+  #em-title .ep-desk-title-br{display:block;width:100%;height:0}
+  .valg{
+    grid-template-columns:repeat(4,1fr);gap:12px;
+    max-width:min(960px,94vw);margin-top:16px;
+  }
+  .valc{padding:15px 12px}
+  .valc h4{font-size:.8rem}
+  .valc p{font-size:.68rem;line-height:1.45}
+  .valc .val-mob-br{display:none}
+  #s6 .s6-inner{max-width:min(720px,94vw)}
+  #s6 .s6-main{zoom:1.3}
+  .s6-shots{margin-top:20px;max-width:524px}
+  .s6-shots-row{gap:8px}
+  .s6-ref{width:256px;padding:4px 4px 5px}
+}
+
+/* ==================== S7: MUSIC IP ==================== */
+#s7{background:var(--cream)}
+#s7 .music-note{margin-top:20px}
+.albs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px;width:100%;max-width:820px}
+.alb{
+  background:#fff;border:2.5px solid var(--b);border-radius:14px;
+  overflow:hidden;box-shadow:var(--sh);
+  transition:transform .3s,box-shadow .3s;cursor:default;
+}
+.alb:hover{transform:translateY(-9px);box-shadow:var(--sh2)}
+.albart{
+  aspect-ratio:1;position:relative;overflow:hidden;
+  background:#1a1a1a;
+}
+.albart-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center;
+}
+.aseq{
+  position:absolute;top:8px;left:8px;z-index:1;
+  background:rgba(0,0,0,.65);color:#fff;
+  padding:2px 8px;border-radius:10px;font-size:.58rem;font-weight:800;
+}
+.albinfo{padding:12px 11px}
+.albep{font-size:.62rem;color:var(--gray);margin-bottom:2px}
+.albtitle{font-size:clamp(.78rem,2vw,.92rem);font-weight:900;margin-bottom:5px;line-height:1.3}
+.albtheme{font-size:.68rem;color:var(--gray);line-height:1.5}
+.albgenre{font-size:.58rem;color:var(--gray);margin-top:6px;line-height:1.4;font-weight:700}
+.gtags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.gtag{background:var(--cream);border:1.5px solid var(--b);border-radius:12px;padding:1px 7px;font-size:.58rem;font-weight:700}
+
+/* ==================== S8: EXPECTED VALUE ==================== */
+#s8{background:linear-gradient(140deg,#5BC4D8,#85D5B0)}
+.valg{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:10px;
+  margin-top:18px;width:100%;max-width:min(920px,96vw);
+}
+.valc{
+  background:rgba(255,255,255,.88);border:2px solid var(--b);
+  border-radius:12px;padding:14px 10px;text-align:center;
+  box-shadow:2px 2px 0 rgba(0,0,0,.18);cursor:default;
+  transition:transform .2s;
+}
+.valc:hover{transform:translateY(-4px)}
+.valc .vi{font-size:1.4rem;margin-bottom:5px}
+.valc h4{font-size:.75rem;font-weight:900;margin-bottom:3px}
+.valc p{font-size:.65rem;color:var(--gray);line-height:1.5}
+
+/* ==================== S9: SPONSOR WHY ==================== */
+#s9{background:var(--dark)}
+.swhybox{
+  background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.14);
+  border-radius:16px;padding:20px;margin-bottom:16px;
+  max-width:860px;width:100%;
+}
+.swhybox h2{color:var(--yellow);font-size:clamp(1rem,3vw,1.4rem);margin-bottom:10px}
+.swhybox p{color:rgba(255,255,255,.65);font-size:clamp(.78rem,1.8vw,.88rem);line-height:1.8}
+.spoints{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;max-width:860px;width:100%}
+.spoint{
+  background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);
+  border-radius:12px;padding:14px;
+}
+.spoint h4{font-size:.82rem;font-weight:900;color:#fff;margin-bottom:7px}
+.spoint ul{list-style:none;display:flex;flex-direction:column;gap:4px;font-size:.72rem;color:rgba(255,255,255,.55)}
+.spoint ul li::before{content:'✦ ';color:var(--yellow)}
+
+/* ==================== S10: SPONSOR TYPES ==================== */
+#s10{background:var(--cream)}
+.stypeg{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px;width:100%;max-width:820px}
+.styc{
+  background:#fff;border:2.5px solid var(--b);border-radius:14px;padding:18px;
+  box-shadow:var(--sh);cursor:default;transition:transform .2s,box-shadow .2s;
+}
+.styc:hover{transform:translate(-2px,-2px);box-shadow:var(--sh2)}
+.styc h3{font-size:.88rem;font-weight:900;margin-bottom:11px;display:flex;align-items:center;gap:7px}
+.ttag{display:inline-block;padding:2px 8px;border-radius:3px;font-size:.6rem;font-weight:800;border:1.5px solid var(--b)}
+.tt1{background:var(--yellow)}.tt2{background:var(--pink);color:#fff}.tt3{background:var(--blue);color:#fff}.tt4{background:var(--green)}
+.styc ul{list-style:none;font-size:.76rem;color:var(--gray);display:flex;flex-direction:column;gap:5px}
+.styc ul li{border-bottom:1px solid var(--lgray);padding-bottom:5px}
+.styc ul li:last-child{border-bottom:none;padding-bottom:0}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.chip{background:var(--cream);border:1.5px solid var(--b);border-radius:12px;padding:2px 9px;font-size:.65rem;font-weight:700}
+
+/* ==================== S11: CLOSING ==================== */
+#s11{background:var(--dark)}
+#s11.slide{align-items:center;justify-content:center;overflow:hidden}
+.close-inner{text-align:center;max-width:min(720px,94vw);width:100%}
+.globe{font-size:clamp(2.6rem,7vw,4.5rem);animation:floatY 4s ease-in-out infinite;margin-bottom:20px;display:block}
+.cquote{
+  font-size:clamp(1.35rem,4.6vw,2.5rem);font-weight:900;
+  color:var(--yellow);line-height:1.38;margin-bottom:22px;
+  word-break:keep-all;
+}
+.csub{
+  color:rgba(255,255,255,.68);font-size:clamp(.8rem,2vw,.94rem);
+  line-height:1.75;margin-bottom:16px;font-weight:600;
+}
+.cspec{
+  display:inline-block;margin:0 auto 24px;
+  padding:6px 16px;font-size:.68rem;font-weight:700;letter-spacing:.06em;
+  color:rgba(255,255,255,.72);
+  border:1px solid rgba(255,255,255,.2);border-radius:999px;
+  background:rgba(255,255,255,.06);
+}
+.cbadges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:4px}
+.cbadge{
+  background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.18);
+  border-radius:6px;padding:6px 14px;font-size:.72rem;font-weight:700;color:rgba(255,255,255,.62);
+}
+.conf{margin-top:28px;font-size:.55rem;color:rgba(255,255,255,.14);letter-spacing:.06em;line-height:1.5}
+
+/* ==================== SPONSOR-ONLY ==================== */
+.sonly{display:none}
+
+/* ==================== ROAD DIVIDER ==================== */
+.rdiv{
+  position:absolute;bottom:0;left:0;right:0;height:4px;
+  background:repeating-linear-gradient(90deg,var(--yellow) 0,var(--yellow) 18px,transparent 18px,transparent 36px);
+  animation:roadScroll 1.5s linear infinite;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media(max-width:680px){
+  .slide{
+    align-items:flex-start;justify-content:flex-start;
+    overflow-y:auto;overflow-x:hidden;
+    padding:52px 16px 28px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .slide-body{gap:18px;padding-bottom:8px}
+  .sh{margin-bottom:14px}
+  .stag{margin-bottom:14px}
+  .sb{margin-bottom:8px}
+  .wgrid,.wgrid3,.wgrid4{grid-template-columns:1fr;gap:14px}
+  .s3-visual-wrap{
+    zoom:1;width:min(380px,96vw);margin:0 auto 10px;
+  }
+  .s3-visual-frame{
+    width:100%;padding:8px 9px 9px;
+    display:block;box-shadow:4px 4px 0 var(--b);transform:rotate(0deg);
+  }
+  .s3-visual-frame::before{width:44px;height:14px;top:-8px}
+  .s3-visual-frame .frame-photo{
+    width:100%;line-height:0;background:transparent;
+  }
+  .s3-visual-frame .frame-photo img{
+    width:100%;height:auto;aspect-ratio:unset;
+    object-fit:unset;object-position:unset;
+    vertical-align:top;
+  }
+  .s3-visual-frame .frame-caption{
+    margin-top:7px;display:flex;flex-wrap:wrap;align-items:center;
+    gap:4px 6px;padding:0 1px;
+  }
+  .s3-visual-frame .frame-label{
+    font-size:.46rem;padding:2px 6px;margin-bottom:0;
+  }
+  .s3-visual-frame .frame-quote{
+    font-size:.58rem;line-height:1.3;flex:1 1 120px;
+  }
+  .hero-photos{gap:8px;margin:4px auto 10px}
+  .hero-cutout{width:66%;max-width:225px}
+  .hero-cutout img{max-height:clamp(150px,33vh,210px)}
+  .hero-cutout.cut-right{margin-bottom:4px}
+  #s5.slide{padding:48px 12px 14px;overflow:hidden}
+  #s5 .stag{margin-bottom:6px}
+  #s5 .hero-photos{gap:6px;margin:0 auto 4px}
+  #s5 .hero-cutout{width:54%;max-width:162px}
+  #s5 .hero-cutout img{max-height:clamp(78px,16.5vh,108px)}
+  #s5 .hero-cutout.cut-right{margin-bottom:0}
+  #s5 .sh{margin-bottom:6px}
+  #s5 .sb{margin-bottom:6px!important}
+  #s5 .epg{margin-top:10px}
+  #s5 .ep-hint{margin-top:10px}
+  .fmtg{grid-template-columns:repeat(2,1fr);gap:10px;grid-auto-rows:1fr}
+  .fmt-road-wrap::before{display:none}
+  .fmtg::before,.fmtg::after{
+    content:'';position:absolute;left:4%;right:4%;height:2px;z-index:0;pointer-events:none;
+    background:repeating-linear-gradient(90deg,rgba(255,217,61,.22) 0,rgba(255,217,61,.22) 14px,transparent 14px,transparent 28px);
+  }
+  .fmtg::before{top:33.33%;transform:translateY(-50%)}
+  .fmtg::after{top:66.66%;transform:translateY(-50%)}
+  .fmtc{position:relative;z-index:1}
+  #s4 .fmt-lead{font-size:.78rem;margin-bottom:16px}
+  #s4 .fmt-lead-b{display:block;margin-top:3px}
+  .fmt-footer{font-size:.74rem;padding:10px 12px 10px 11px}
+  .fmt-flow{margin-top:16px}
+  .emodal{max-width:94vw;padding:22px 18px 26px;border-radius:18px 18px 0 0;max-height:78vh}
+  .emodal-shots{gap:6px;padding-top:18px}
+  .emodal-ref{width:116px}
+  #em-title .ep-mob-title-br{display:block;width:100%;height:0}
+  #em-title .ep-desk-title-br{display:none}
+  #s7.slide{
+    align-items:center;justify-content:flex-start;
+    overflow-y:auto;overflow-x:hidden;padding:48px 14px 16px;
+    -webkit-overflow-scrolling:touch;
+  }
+  #s7 .stag{margin-bottom:8px;font-size:.6rem}
+  #s7 .sh{font-size:clamp(1.5rem,6.5vw,1.9rem);margin-bottom:8px}
+  #s7 .sb{font-size:.72rem;line-height:1.55;margin-bottom:0;max-width:340px}
+  #s7 .albs{
+    grid-template-columns:1fr;gap:10px;
+    max-width:min(360px,94vw);margin-top:12px;
+  }
+  #s7 .alb{display:flex;flex-direction:row;align-items:stretch}
+  #s7 .albart{
+    width:100px;min-width:100px;aspect-ratio:1;flex-shrink:0;
+  }
+  #s7 .aseq{top:6px;left:6px;font-size:.52rem;padding:3px 7px}
+  #s7 .alb .albinfo{
+    flex:1;min-width:0;padding:11px 12px;text-align:left;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  #s7 .albtitle{font-size:.86rem;margin-bottom:4px;line-height:1.3}
+  #s7 .albtheme{font-size:.62rem;line-height:1.4}
+  #s7 .albgenre{font-size:.56rem;margin-top:4px;line-height:1.35}
+  #s7 .music-note{
+    font-size:.64rem;line-height:1.5;margin-top:16px;
+    padding:9px 12px;max-width:min(360px,94vw);
+  }
+  .gtags{display:none}
+  #s8.slide{align-items:center;justify-content:flex-start;overflow-y:auto;padding:48px 14px 18px}
+  #s8 .sh{margin-bottom:8px}
+  #s8 .sb{font-size:.74rem;line-height:1.5;margin-bottom:0}
+  #s8 .valg{grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px;max-width:min(420px,96vw)}
+  #s8 .valc{padding:12px 8px}
+  #s8 .valc .vi{font-size:1.25rem;margin-bottom:4px}
+  #s8 .valc h4,
+  #s8 .valc p{
+    font-size:.72rem;line-height:1.45;
+    word-break:keep-all;overflow-wrap:break-word;text-wrap:pretty;
+  }
+  #s8 .valc p{font-size:.62rem}
+  #s8 .valc .val-mob-br{display:block;width:100%;height:0}
+  #s11.slide{
+    align-items:center;justify-content:center;
+    overflow:hidden;padding:52px 18px 24px;
+  }
+  #s11 .cquote{font-size:clamp(1.2rem,5.2vw,1.65rem);margin-bottom:18px;line-height:1.42}
+  #s11 .csub{font-size:.78rem;margin-bottom:14px;line-height:1.7}
+  #s11 .cspec{font-size:.62rem;padding:5px 12px;margin-bottom:20px}
+  #s11 .conf{margin-top:22px;font-size:.52rem}
+  .spoints{grid-template-columns:1fr;gap:12px}
+  .stypeg{grid-template-columns:1fr;gap:14px}
+  .spoint{padding:12px}
+  .krow{gap:10px;margin-top:16px}
+  #s2.slide{
+    align-items:center;justify-content:center;
+    overflow-y:auto;padding:56px 18px 24px;
+  }
+  #s2 .concept-inner{
+    transform:none;margin:auto;
+    max-width:min(360px,92vw);
+  }
+  #s2 .cbig{
+    font-size:clamp(1.62rem,6vw,2.2rem);
+    line-height:1.12;margin-bottom:20px;
+  }
+  #s2 .sb{margin-bottom:22px;font-size:.82rem}
+  #s2 .krow{margin-bottom:22px;gap:10px}
+  #s2 .definition-box{padding:12px 16px;font-size:.78rem}
+  .kpill{padding:8px 12px;font-size:.76rem}
+  #s1.slide{
+    align-items:center;justify-content:center;
+    padding:56px 22px 20px;overflow:hidden;
+  }
+  #s1 .inner{
+    min-height:auto;flex:none;
+    justify-content:center;
+    gap:14px;padding:0;
+    max-width:min(340px,86vw);
+    margin:auto;
+  }
+  #s1 .s1-top,#s1 .s1-head,#s1 .s1-mid,#s1 .s1-foot{gap:8px}
+  #s1 .s1-mid{gap:10px}
+  #s1 .s1-foot{margin-top:2px}
+  #s1 .hdesc{max-width:280px}
+  #s1 .hero-quote{max-width:300px}
+  #s1 .f-st1,#s1 .f-st2{display:none}
+  #s1 .f-note{top:9%;left:3%;font-size:1rem;opacity:.55}
+  #s1 .f-camp{top:9%;right:3%;font-size:1rem;opacity:.55}
+  #s1 .f-car,#s1 .f-bike{
+    bottom:3%;font-size:1.25rem;opacity:.5;
+    animation:none;transform:none;
+  }
+  #s1 .f-car{left:2%}
+  #s1 .f-bike{right:2%}
+  #s1 .road{bottom:36px}
+  #s1 .rdiv{bottom:20px}
+  #s1 .f-car,#s1 .f-bike{bottom:42px}
+  #s1 .s1-foot{padding-bottom:8px}
+  .mtitle{font-size:clamp(2.2rem,10.5vw,3.2rem)}
+  .mtitle .hl{-webkit-text-stroke:1.5px var(--b)}
+  .hero-spec{font-size:.66rem}
+  .hero-quote{padding:10px 12px}
+  .nav-dots{opacity:.6}
+}
+@media(max-width:480px){
+  #s7.slide{padding:44px 12px 14px}
+  #s7 .albart{width:92px;min-width:92px}
+  #s7 .albs{gap:9px;margin-top:10px}
+  #s7 .alb .albinfo{padding:10px 11px}
+  /* S5: EPISODE MAP — 2열 × 4행, 한 화면 맞춤 */
+  #s5.slide{
+    padding:46px 10px 10px;
+    overflow:hidden;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  #s5 > div{max-width:min(400px,94vw)}
+  #s5 .stag{margin-bottom:3px;font-size:.62rem}
+  #s5 .hero-photos{gap:4px;margin:0 auto 2px}
+  #s5 .hero-cutout{width:51%;max-width:132px}
+  #s5 .hero-cutout img{max-height:clamp(66px,13.5vh,90px)}
+  #s5 .sh{font-size:clamp(1.28rem,5.2vw,1.65rem);margin-bottom:4px;line-height:1.15}
+  #s5 .sb{font-size:.64rem;line-height:1.4;margin-bottom:5px!important}
+  #s5 .epg{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:7px 9px;
+    margin-top:7px;
+    max-width:100%;
+  }
+  #s5 .emini{
+    padding:9px 7px;
+    min-height:76px;
+    border-radius:10px;
+    border-width:2px;
+    box-shadow:2px 2px 0 var(--b);
+  }
+  #s5 .emini .ei{font-size:1.45rem;margin-bottom:3px}
+  #s5 .emini .en{font-size:.52rem}
+  #s5 .emini .et{font-size:.64rem;line-height:1.18}
+  #s5 .ep-hint{
+    margin-top:7px;padding:5px 9px;font-size:.52rem;
+    max-width:min(280px,92vw);gap:3px;line-height:1.35;
+    box-shadow:2px 2px 0 var(--b);
+  }
+  #s5 .ep-hint-ico{font-size:.65rem}
+  .ep-hint{
+    margin-top:12px;padding:7px 11px;font-size:.56rem;
+    max-width:min(300px,90vw);gap:4px;line-height:1.4;
+    box-shadow:2px 2px 0 var(--b);
+  }
+  .ep-hint-ico{font-size:.72rem}
+  .clipg{grid-template-columns:repeat(2,1fr);gap:10px}
+  .s6-shots{margin-top:12px;max-width:364px}
+  .s6-shots-row{gap:6px}
+  .s6-ref{width:176px}
+  .nav-dots{right:6px}
+  #s1 .inner{gap:12px;max-width:min(320px,84vw)}
+  #s1 .s1-top,#s1 .s1-head,#s1 .s1-mid,#s1 .s1-foot{gap:7px}
+  #s1 .s1-mid{gap:8px}
+  .hero-project{font-size:.56rem}
+  #s1 .scroll-hint{font-size:.65rem}
+  #s2 .cbig{font-size:clamp(1.48rem,5.4vw,1.9rem)}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span class="topbar-brand">Studio 596 Original · 아이돌, 세상에 나가다</span>
+  <div class="topbar-right">
+    <span class="slide-num" id="snum">1 / 9</span>
+    <span class="mode-tag" id="mtag"></span>
+  </div>
+</div>
+
+<!-- NAV DOTS -->
+<div class="nav-dots" id="navDots"></div>
+
+<!-- DECK -->
+<div class="deck" id="deck">
+
+  <!-- S1: TITLE -->
+  <div class="slide" id="s1">
+    <div class="bg-grid"></div>
+    <div class="road"></div>
+    <span class="ficon f-car">🚗</span>
+    <span class="ficon f-bike">🚴</span>
+    <span class="ficon f-camp">⛺</span>
+    <span class="ficon f-note">🎵</span>
+    <span class="ficon f-st1">✦</span>
+    <span class="ficon f-st2">✧</span>
+    <div class="inner">
+      <div class="s1-top">
+        <span class="hero-project ai">Road Music Project</span>
+        <div class="stamp ai">STUDIO 596 ORIGINAL · 2026</div>
+      </div>
+      <div class="s1-head">
+        <h1 class="mtitle ai">아이돌,<br><em class="hl">세상에</em><br>나가다</h1>
+        <p class="hname ai">첫 번째 편: XODIAC 현식 편</p>
+      </div>
+      <div class="s1-mid">
+        <p class="hdesc ai">첫 번째 아이돌, XODIAC 현식<br>무대 밖에서 경험하고, 이야기와 노래로 남기는 3개월의 기록</p>
+        <p class="hero-spec ai">8 Episodes · 3 Months · 3 Original Songs</p>
+        <p class="hero-quote ai">현식이 세상 밖에서 만난 순간들이,<br>하나의 음악이 됩니다</p>
+      </div>
+      <div class="s1-foot">
+        <div class="scroll-hint ai">현식이 세상 밖으로 나가는 중<br>클로징까지 이어집니다 ↓</div>
+      </div>
+    </div>
+    <div class="rdiv"></div>
+  </div>
+
+  <!-- S2: CONCEPT -->
+  <div class="slide" id="s2">
+    <div class="concept-inner">
+      <span class="stag ai" style="color:var(--yellow)">CONCEPT</span>
+      <h2 class="cbig ai">단순 브이로그가 아닌,<br><em>“경험 → 이야기 → 음악”</em><br>오리지널 IP</h2>
+      <p class="sb ai">무대 위 아이돌 현식이 아닌,<br>세상 밖으로 나온 원현식의 이야기.<br><br>운전, 캠핑, 만남, 식사, 대화 속에서<br>현식의 감정과 문장을 꺼내고,<br><br>매회 라이브 클립과 오리지널 곡 3곡으로<br>현식만의 음악적 기록을 완성합니다.</p>
+      <div class="krow">
+        <div class="kpill ap">🛣️ Road</div>
+        <div class="kpill ap">💬 Talk</div>
+        <div class="kpill ap">🌍 Life</div>
+        <div class="kpill ap">🎸 Music</div>
+        <div class="kpill ap">📹 Live Clip</div>
+        <div class="kpill ap">💿 Original Song</div>
+      </div>
+      <p class="definition-box ai">현식의 경험이 이야기로, 이야기가 라이브 클립과 오리지널 음악으로 이어지는 로드 뮤직 콘텐츠.</p>
+    </div>
+  </div>
+
+  <!-- S3: WHY HYUNSIK -->
+  <div class="slide" id="s3">
+    <div class="s3-layout">
+      <span class="stag ai">WHY HYUNSIK</span>
+      <h2 class="sh ai">왜 현식인가</h2>
+      <div class="s3-intro ai">
+        <p>XODIAC 현식은 감성적인 음색과 라이브 역량을 가진 메인보컬입니다. 동시에 스튜디오 안에서 정해진 질문에 답하는 방식보다, 밖에서 걷고, 먹고, 사람들을 만나며 자연스럽게 이야기할 때 매력이 더 잘 살아나는 아티스트입니다.</p>
+      </div>
+      <div class="s3-visual-wrap ap">
+        <div class="s3-visual-frame">
+          <div class="frame-photo">
+            <img src="assets/hyunsik-quote-polaroid.png" alt="현식 인터뷰 장면" width="960" height="540" loading="lazy" decoding="async">
+          </div>
+          <div class="frame-caption">
+            <div class="frame-label">현식의 한마디</div>
+            <div class="frame-quote">“솔직한 모습을 보여주고 싶어요”</div>
+          </div>
+        </div>
+      </div>
+      <div class="wgrid wgrid4">
+        <div class="wcard ap">
+          <span class="wi">🎤</span>
+          <h3>XODIAC 메인보컬, 감성적인 음색</h3>
+          <p>현식은 XODIAC의 메인보컬로, 감성적인 음색과 라이브 역량을 가진 아티스트입니다. 매회 엔딩 라이브 클립을 통해 단순 출연자가 아니라, 자연스럽게 노래하는 가수의 모습을 보여줍니다.</p>
+        </div>
+        <div class="wcard ap">
+          <span class="wi">🤝</span>
+          <h3>한 번 맞춰본 믿을 수 있는 호흡</h3>
+          <p>현식은 듀엣 프로젝트 ‘아무 말 없이도’를 통해 더웨이브스/MBC+와 이미 음악 제작, 라이브 클립, 쇼챔피언 무대, 비하인드 콘텐츠를 함께 진행한 경험이 있습니다. 기존 협업을 통해 보컬, 현장 적응력, 콘텐츠 호흡을 확인한 만큼 이번 프로젝트도 자연스럽게 이어갈 수 있습니다.</p>
+        </div>
+        <div class="wcard ap">
+          <span class="wi">🌿</span>
+          <h3>스튜디오 밖에서 더 편해지는 현식</h3>
+          <p>현식은 밖에서 움직이고, 먹고, 처음 보는 사람들과 이야기할 때 편안한 리액션이 잘 나오는 타입입니다. 운전, 캠핑, 야장, 동네 방문, 사람들과의 만남 속에서 현식의 인간적인 매력을 가볍고 재미있게 보여줄 수 있습니다.</p>
+        </div>
+        <div class="wcard ap">
+          <span class="wi">📖</span>
+          <h3>무겁지 않게 꺼내는 진짜 이야기</h3>
+          <p>연습생 시절, 군 복무, 데뷔, 메인보컬 활동까지 현식에게는 무대 위 모습만으로는 다 보여주기 어려운 시간이 있습니다. 다만 이 콘텐츠는 과거사를 무겁게 파고드는 방식이 아니라, 편안한 대화 속에서 “그때는 그랬고, 그래서 지금이 더 좋다”는 식으로 자연스럽게 풀어갑니다.</p>
+        </div>
+      </div>
+      <div class="kw-row ai">
+        <span class="kw-chip">보컬</span>
+        <span class="kw-chip">감성</span>
+        <span class="kw-chip">리액션</span>
+        <span class="kw-chip">야외 토크</span>
+        <span class="kw-chip">운전</span>
+        <span class="kw-chip">캠핑</span>
+        <span class="kw-chip">야장</span>
+        <span class="kw-chip">동네 방문</span>
+        <span class="kw-chip">라이브 클립</span>
+        <span class="kw-chip">오리지널 음악</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- S4: FORMAT -->
+  <div class="slide" id="s4">
+    <div class="format-inner">
+      <span class="stag ai" style="color:var(--yellow)">FORMAT</span>
+      <h2 class="sh ai" style="color:#fff">콘텐츠 구조</h2>
+      <p class="fmt-lead ai">본편 · 숏폼 · 라이브 클립 · 오리지널 곡으로 확장되는 <span class="fmt-lead-b">3개월 로드 뮤직 프로젝트</span></p>
+      <div class="fmt-road-wrap ai">
+        <div class="fmtg">
+          <div class="fmtc ap">
+            <div class="fmt-icon">🎬</div>
+            <div class="fmtn" data-count="8">0</div>
+            <div class="fmtu">Episodes</div>
+            <div class="fmtl">총 8회</div>
+          </div>
+          <div class="fmtc ap">
+            <div class="fmt-icon">🗓️</div>
+            <div class="fmtn" data-count="3">0</div>
+            <div class="fmtu">Months</div>
+            <div class="fmtl">약 3개월</div>
+          </div>
+          <div class="fmtc ap">
+            <div class="fmt-icon">⏱️</div>
+            <div class="fmtn">~20</div>
+            <div class="fmtu">Min</div>
+            <div class="fmtl">본편 내외</div>
+          </div>
+          <div class="fmtc ap">
+            <div class="fmt-icon">📱</div>
+            <div class="fmtn">N</div>
+            <div class="fmtu">Shorts</div>
+            <div class="fmtl">회차별 숏폼</div>
+          </div>
+          <div class="fmtc ap">
+            <div class="fmt-icon">🎙️</div>
+            <div class="fmtn"><span data-count="8">0</span><span class="fmt-plus">+</span></div>
+            <div class="fmtu">Live Clips</div>
+            <div class="fmtl">매회 엔딩</div>
+          </div>
+          <div class="fmtc ap">
+            <div class="fmt-icon">💿</div>
+            <div class="fmtn" data-count="3">0</div>
+            <div class="fmtu">Original Songs</div>
+            <div class="fmtl">시즌 발매</div>
+          </div>
+        </div>
+      </div>
+      <div class="fmt-flow ai">
+        <span>Experience</span><span class="arr">→</span>
+        <span>Talk</span><span class="arr">→</span>
+        <span>Live Clip</span><span class="arr">→</span>
+        <span>Original Song</span>
+        <span class="flow-ko">경험 → 대화 → 라이브 클립 → 오리지널 곡</span>
+      </div>
+      <p class="fmt-footer ai">본편, 숏폼, 라이브 클립, 오리지널 곡까지.<br>현식의 3개월이 콘텐츠 IP로 확장됩니다.</p>
+    </div>
+  </div>
+
+  <!-- S5: EPISODES -->
+  <div class="slide" id="s5">
+    <div style="text-align:center;max-width:820px;width:100%">
+      <span class="stag ai">EPISODE MAP</span>
+      <div class="hero-photos ap">
+        <div class="hero-cutout">
+          <img src="hero-cutout.png" alt="XODIAC 현식" width="480" height="640" loading="lazy" decoding="async">
+        </div>
+        <div class="hero-cutout cut-right">
+          <img src="hero-cutout-2.png" alt="XODIAC 현식" width="480" height="640" loading="lazy" decoding="async">
+        </div>
+      </div>
+      <h2 class="sh ai">8 Episodes · 1 Journey</h2>
+      <p class="sb ai" style="font-size:.78rem;margin-bottom:12px">현식이 세상 밖에서 경험하고, 말하고, 노래로 남기는 8개의 여정</p>
+      <div class="epg" id="epGrid">
+        <div class="emini ap" onclick="openEp(0)"><div class="ei">🌞</div><div class="en">EP.1</div><div class="et">자기소개팅</div></div>
+        <div class="emini ap" onclick="openEp(1)"><div class="ei">🚗</div><div class="en">EP.2</div><div class="et">운전 +<br>추억여행</div></div>
+        <div class="emini ap" onclick="openEp(2)"><div class="ei">✍️</div><div class="en">EP.3</div><div class="et">내 얘기<br>가사로</div></div>
+        <div class="emini ap" onclick="openEp(3)"><div class="ei">⛺</div><div class="en">EP.4</div><div class="et">캠핑하고<br>한 컷</div></div>
+        <div class="emini ap" onclick="openEp(4)"><div class="ei">🧥</div><div class="en">EP.5</div><div class="et">동묘 찍고<br>야장</div></div>
+        <div class="emini ap" onclick="openEp(5)"><div class="ei">🎤</div><div class="en">EP.6</div><div class="et">친구랑<br>로드톡</div></div>
+        <div class="emini ap" onclick="openEp(6)"><div class="ei">⚾</div><div class="en">EP.7</div><div class="et">야구장에<br>가다</div></div>
+        <div class="emini ap" onclick="openEp(7)"><div class="ei">🎙️</div><div class="en">EP.8</div><div class="et">노래로<br>완성</div></div>
+      </div>
+      <p class="ep-hint ai"><span class="ep-hint-ico">👆</span>카드를 콕! 눌러보면 이야기가 쏙 나와요 — 하나씩 확인해 주세요 <span class="ep-hint-ico">✨</span></p>
+    </div>
+  </div>
+
+  <!-- S6: LIVE CLIPS -->
+  <div class="slide" id="s6">
+    <div class="s6-inner">
+      <div class="s6-main">
+        <span class="stag ai" style="color:var(--pink)">LIVE CLIP SYSTEM</span>
+        <h2 class="sh ai" style="color:#fff">라이브 클립 시스템</h2>
+        <p class="lcsub ai">본편의 감정을 완성하고, 현식의 아티스트 이미지를 남기는 엔딩 포맷</p>
+        <div class="cass ai">
+          <div class="reels"><div class="reel"></div><div class="reel r2"></div></div>
+          <div class="tape"></div>
+          <div class="cass-lbl">Road Cassette Player</div>
+          <div class="cass-sub">매회 남은 감정이 라이브로 쌓이고, 음악으로 이어집니다</div>
+        </div>
+        <div class="clipg">
+          <div class="clipc ap"><div class="ci">🚗</div><div class="cn">차 안 라이브</div><div class="cs">Drive · Close-up<br>이동 중 가장 편안한 목소리와<br>표정을 담는 라이브</div></div>
+          <div class="clipc ap"><div class="ci">⛺</div><div class="cn">캠핑장 라이브</div><div class="cs">Night · Atmos<br>밤의 공기와 대화의 여운을<br>노래로 남기는 엔딩</div></div>
+          <div class="clipc ap"><div class="ci">🛣️</div><div class="cn">길 위 라이브</div><div class="cs">Road · Memory<br>그날의 장면과 문장을<br>짧은 라이브로 기록</div></div>
+          <div class="clipc ap"><div class="ci">☕</div><div class="cn">카페 라이브</div><div class="cs">Talk · Warm<br>대화가 끝난 뒤, 남은 감정을<br>조용히 부르는 라이브</div></div>
+          <div class="clipc ap"><div class="ci">🎙️</div><div class="cn">스튜디오596 라이브</div><div class="cs">Signature · Original<br>현식의 보컬을 가장 선명하게 남기는 시그니처 클립</div></div>
+          <div class="clipc ap"><div class="ci">🎸</div><div class="cn">1절/어쿠스틱</div><div class="cs">Shortform · Acoustic<br>한 절만으로도 공유될 수 있는<br>짧고 선명한 라이브</div></div>
+        </div>
+      </div>
+      <div class="s6-shots ap">
+        <span class="s6-shots-lbl">샷 레퍼런스</span>
+        <div class="s6-shots-row">
+          <div class="s6-ref"><div class="s6-ref-media"><img src="assets/vocal-ref-a.webp" alt="" loading="lazy" decoding="async"></div></div>
+          <div class="s6-ref ref-b"><div class="s6-ref-media"><img src="assets/vocal-ref-b.webp" alt="" loading="lazy" decoding="async"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S7: MUSIC IP -->
+  <div class="slide" id="s7">
+    <div style="text-align:center;max-width:820px;width:100%">
+      <span class="stag ai">ORIGINAL MUSIC IP</span>
+      <h2 class="sh ai">오리지널 뮤직 IP</h2>
+      <p class="sb ai" style="font-size:.8rem">현식의 경험과 이야기가 음악으로 확장되는 오리지널 IP</p>
+      <div class="albs">
+        <div class="alb ap">
+          <div class="albart"><img class="albart-img" src="assets/Korean_man_in_car_202606011646.jpeg" alt="" loading="lazy" decoding="async"><span class="aseq">1st Song</span></div>
+          <div class="albinfo">
+            <div class="albtitle">바깥으로 나가는 마음</div>
+            <div class="albtheme">자유 · 첫 출발 · 설렘</div>
+            <div class="albgenre">Dreamy Pop Rock · Drive Pop</div>
+          </div>
+        </div>
+        <div class="alb ap">
+          <div class="albart"><img class="albart-img" src="assets/Korean_male_artist_holding_notebook_202606011646.jpeg" alt="" loading="lazy" decoding="async"><span class="aseq">2nd Song</span></div>
+          <div class="albinfo">
+            <div class="albtitle">다시 노래하는 이유</div>
+            <div class="albtheme">초심 · 과거 · 진심</div>
+            <div class="albgenre">Medium Tempo Ballad · Acoustic Pop</div>
+          </div>
+        </div>
+        <div class="alb ap">
+          <div class="albart"><img class="albart-img" src="assets/Korean_male_artist_night_city_202606011646.jpeg" alt="" loading="lazy" decoding="async"><span class="aseq">3rd Song</span></div>
+          <div class="albinfo">
+            <div class="albtitle">세상에 나온 아이돌</div>
+            <div class="albtheme">지금의 현식 · 다음 시작 · 완성</div>
+            <div class="albgenre">Pop R&amp;B · Soft Dance Pop</div>
+          </div>
+        </div>
+      </div>
+      <p class="music-note ai">각 회차에서 수집한 키워드와 이야기 요소를 바탕으로, 현식의 오리지널 곡 3곡을 완성합니다</p>
+    </div>
+  </div>
+
+  <!-- S8: EXPECTED VALUE -->
+  <div class="slide" id="s8">
+    <div style="text-align:center;max-width:880px;width:100%">
+      <span class="stag ai">EXPECTED VALUE</span>
+      <h2 class="sh ai" id="valTitle">기대 효과</h2>
+      <p class="sb ai" id="valSub">현식 · 채널 · 음악 IP 관점에서 기대되는 확장 효과</p>
+      <div class="valg">
+        <div class="valc ap"><div class="vi">🌟</div><h4>개인 인지도 확장</h4><p>무대 밖 모습까지 보여주는<span class="val-mob-br"></span>개인 콘텐츠 자산</p></div>
+        <div class="valc ap"><div class="vi">💛</div><h4>인간적 매력 노출</h4><p>대화·이동·체험 속<span class="val-mob-br"></span>자연스러운 캐릭터 형성</p></div>
+        <div class="valc ap"><div class="vi">🔥</div><h4>팬덤 결속 강화</h4><p>매회 본편과 라이브 클립으로<span class="val-mob-br"></span>지속 접점 확보</p></div>
+        <div class="valc ap"><div class="vi">😊</div><h4>대중 친화 이미지</h4><p>일상 공간과 체험을 통해<span class="val-mob-br"></span>접근성 높은 이미지 구축</p></div>
+        <div class="valc ap"><div class="vi">🎤</div><h4>보컬 아티스트<span class="val-mob-br"></span>이미지 강화</h4><p>엔딩 라이브와 오리지널 곡으로<span class="val-mob-br"></span>음악적 정체성 부각</p></div>
+        <div class="valc ap"><div class="vi">💿</div><h4>오리지널 음악<span class="val-mob-br"></span>자산 확보</h4><p>본편 서사를 기반으로 한<span class="val-mob-br"></span>오리지널 곡 3곡 제작</p></div>
+        <div class="valc ap"><div class="vi">📹</div><h4>숏폼·라이브<span class="val-mob-br"></span>클립 확장</h4><p>본편 이후에도 활용 가능한<span class="val-mob-br"></span>영상 클립 자산 확보</p></div>
+        <div class="valc ap"><div class="vi">📡</div><h4>596 오리지널<span class="val-mob-br"></span>포맷 확보</h4><p>본편·숏폼·라이브·음악을 결합한<span class="val-mob-br"></span>시리즈 포맷 구축</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S9: SPONSOR WHY (sponsor-only) -->
+  <div class="slide sonly" id="s9">
+    <div style="text-align:center;max-width:860px;width:100%">
+      <span class="stag ai" style="color:var(--pink)">SPONSOR PROPOSAL</span>
+      <h2 class="sh ai" style="color:var(--dark)">왜 이 프로그램인가</h2>
+      <div class="swhybox ai">
+        <h2>브랜드가 자연스럽게 살아 숨쉬는 콘텐츠 구조</h2>
+        <p>제품은 현식의 이동·캠핑·자전거·사진·라이브 클립 속 오브제로 자연스럽게 노출될 수 있고, 공간·프랜차이즈 브랜드는 현식이 직접 방문하고 경험하는 방식으로 콘텐츠화할 수 있습니다. 팬덤 기반 이벤트와 브랜드 이벤트를 연결할 수도 있습니다.</p>
+      </div>
+      <div class="spoints">
+        <div class="spoint ap" style="background:rgba(255,213,61,.12);border-color:rgba(255,213,61,.3)">
+          <h4 style="color:var(--yellow)">🌟 XODIAC 현식의 매력</h4>
+          <ul>
+            <li>아이돌 팬덤 보유 메인보컬</li>
+            <li>드라마 출연, 대중 인지도 확장 중</li>
+            <li>MBC+와 협업 검증 완료</li>
+            <li>자연스럽고 친근한 예능감</li>
+          </ul>
+        </div>
+        <div class="spoint ap" style="background:rgba(91,196,216,.12);border-color:rgba(91,196,216,.3)">
+          <h4 style="color:var(--blue)">📡 MBC Studio 596 채널</h4>
+          <ul>
+            <li>MBC 공식 음악 유튜브 채널</li>
+            <li>아이돌 팬덤 타깃 핵심 플랫폼</li>
+            <li>본편+숏폼+라이브 클립 다중 노출</li>
+            <li>오리지널 IP로 지속적 노출</li>
+          </ul>
+        </div>
+        <div class="spoint ap" style="background:rgba(133,213,176,.12);border-color:rgba(133,213,176,.3)">
+          <h4 style="color:var(--green)">📦 만들어지는 콘텐츠 자산</h4>
+          <ul>
+            <li>본편 8편 (20분 내외)</li>
+            <li>숏폼 N개 (회차별)</li>
+            <li>라이브 클립 8개 이상</li>
+            <li>오리지널 곡 3곡 음원 발매</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S10: SPONSOR TYPES (sponsor-only) -->
+  <div class="slide sonly" id="s10">
+    <div style="text-align:center;max-width:820px;width:100%">
+      <span class="stag ai">PPL TYPES &amp; EVENTS</span>
+      <h2 class="sh ai">스폰서 유형 &amp; 이벤트</h2>
+      <div class="stypeg">
+        <div class="styc ap">
+          <h3><span class="ttag tt1">Product</span> 물품형</h3>
+          <ul>
+            <li>🎒 제품 사용·착용 장면 노출</li>
+            <li>🚗 차량·캠핑·자전거 자연 노출</li>
+            <li>📹 라이브 클립 오브제 노출</li>
+          </ul>
+          <div class="chips"><span class="chip">캠핑 의자</span><span class="chip">자전거</span><span class="chip">텀블러</span><span class="chip">이어폰</span><span class="chip">향수</span><span class="chip">카메라</span></div>
+        </div>
+        <div class="styc ap">
+          <h3><span class="ttag tt2">Place</span> 공간형</h3>
+          <ul>
+            <li>🏪 매장 방문 현장 토크</li>
+            <li>🎵 브랜드 공간 라이브 클립 촬영</li>
+            <li>🎉 브랜드 메뉴 연계 팬 이벤트</li>
+          </ul>
+          <div class="chips"><span class="chip">카페</span><span class="chip">국밥집</span><span class="chip">생활맥주</span><span class="chip">캠핑장</span><span class="chip">사진관</span></div>
+        </div>
+        <div class="styc ap">
+          <h3><span class="ttag tt3">Experience</span> 체험형</h3>
+          <ul>
+            <li>🎯 브랜드 체험을 회차 메인으로</li>
+            <li>📸 현식이 찍은 사진을 브랜드 이미지로</li>
+            <li>💬 체험 소감 자연스러운 토크</li>
+          </ul>
+          <div class="chips"><span class="chip">브랜드 호감도</span><span class="chip">팬덤 직접 접촉</span><span class="chip">SNS 바이럴</span></div>
+        </div>
+        <div class="styc ap">
+          <h3><span class="ttag tt4">Event</span> 이벤트 연계</h3>
+          <ul>
+            <li>🖼️ 현식 사인 폴라로이드 이벤트</li>
+            <li>📍 매장 방문 인증 이벤트</li>
+            <li>🎧 스트리밍 인증 브랜드 증정</li>
+            <li>💬 라이브 클립 댓글 이벤트</li>
+          </ul>
+          <div class="chips"><span class="chip">팬덤 구매 전환</span><span class="chip">방문 트래픽</span><span class="chip">인지도 상승</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S11: CLOSING -->
+  <div class="slide" id="s11">
+    <div class="close-inner">
+      <span class="globe ai">🌍</span>
+      <h2 class="cquote ai">세상 밖에서 경험한 순간들로,<br>이야기와 노래를 만들어갑니다.</h2>
+      <p class="csub ai">XODIAC 현식의 첫 번째 로드 뮤직 프로젝트<br>MBC Studio 596 Original 「아이돌, 세상에 나가다」</p>
+      <p class="cspec ai">8 Episodes · 3 Months · 3 Original Songs</p>
+      <div class="cbadges ai">
+        <span class="cbadge">MBC Studio 596</span>
+        <span class="cbadge">XODIAC HYUNSIK</span>
+        <span class="cbadge">The Waves</span>
+      </div>
+      <p class="conf ai">© The Waves · MBC Studio 596 · XODIAC HYUNSIK · Proposal Web Page</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- EPISODE MODAL -->
+<div class="emodal-bg" id="emodal" onclick="closeEpModal(event)">
+  <div class="emodal">
+    <div class="emodal-close" onclick="closeEp()">✕</div>
+    <div class="emodal-top">
+      <div class="emodal-main">
+        <div class="emodal-ep" id="em-ep"></div>
+        <div class="emodal-tag" id="em-tag"></div>
+        <div class="emodal-icon" id="em-icon"></div>
+        <div class="emodal-title" id="em-title"></div>
+      </div>
+      <div class="emodal-shots" id="em-shots"></div>
+    </div>
+    <div class="emodal-body" id="em-body"></div>
+    <div class="emodal-kw" id="em-kw"></div>
+  </div>
+</div>
+
+<script>
+const EPS=[
+  {ep:'EP.1',tag:'START',icon:'🌞',title:'현식과 첫 번째 자기소개팅',
+   titleHtml:'현식과 첫 번째 <span class="ep-mob-title-br"></span>자기소개팅',
+   body:'현식이 세상 밖으로 처음 나가는 오프닝 회차. 딱딱한 프로필 소개가 아니라, ‘처음 만나는 사람과 소개팅하듯’ 원현식을 알아가는 시간으로 구성한다. 가볍게 걷고, 묻고, 답하고, 웃으면서 현식이 어떤 사람인지 자연스럽게 보여주고, 앞으로의 여정을 예고한다.',
+   kw:['출발','만남','자기소개','대화'],
+   shots:['assets/ep1-ref-a.png','assets/ep1-ref-b.png']},
+  {ep:'EP.2',tag:'ROAD',icon:'🚗',title:'현식, 운전대를 잡고 추억여행을 떠나다',
+   titleHtml:'현식, 운전대를 잡고 <span class="ep-desk-title-br"></span>추억여행을 떠나다',
+   body:'현식이 직접 운전대를 잡고, 자신에게 의미 있는 장소로 이동하는 회차. 어릴 적 동네, 연습생 시절의 기억, 처음 노래를 좋아하게 된 순간 등 ‘초심’과 연결한다. 이후 회차에서도 운전은 콘텐츠의 기본 이동 장치로 활용 가능하다.',
+   kw:['운전','드라이브','추억','초심'],
+   shots:['assets/outdoor-ref-a.webp','assets/outdoor-ref-b.webp']},
+  {ep:'EP.3',tag:'LYRIC',icon:'✍️',title:'이야기를 작사로 써내보다',
+   body:'현식이 본격적으로 자기 이야기를 노래로 남기기 위한 첫 단계. 작사가 또는 프로듀서와 함께 ‘내 이야기를 작사로 써내보는 법’을 배우는 회차다. 이후 모든 회차에서 나오는 감정과 문장을 음악으로 연결하기 위한 장치가 된다.',
+   kw:['작사','문장','감정','음악'],
+   shots:['assets/ep3-ref-a.png','assets/ep3-ref-b.png']},
+  {ep:'EP.4',tag:'CAMP',icon:'⛺',title:'현식, 캠핑 가서 사진으로 하루를 남기다',
+   titleHtml:'현식, 캠핑 가서 사진으로 <span class="ep-desk-title-br"></span>하루를 남기다',
+   body:'현식이 해보고 싶어 했던 캠핑을 중심으로 한 회차. 캠핑장 또는 피크닉 공간에서 쉬고, 먹고, 대화하고, 사진으로 그날의 장면을 기록한다. 밤에는 캠핑장 라이브 또는 어쿠스틱 라이브로 감정적 엔딩을 구성한다.',
+   kw:['캠핑','사진','쉼','밤'],
+   shots:['assets/ep4-ref-a.png','assets/ep4-ref-b.png']},
+  {ep:'EP.5',tag:'STREET',icon:'🧥',title:'현식, 동묘를 걷고 야장에 앉아보다',
+   titleHtml:'현식, 동묘를 걷고 <span class="ep-mob-title-br"></span>야장에 앉아보다',
+   body:'동묘에서 옷, 물건, 거리 분위기를 구경하며 현식의 자연스러운 리액션을 보여주는 회차. 후반부는 야장으로 이동해 편하게 먹고 이야기하는 구성. 예능감, 대중성, 숏폼 포인트가 가장 잘 나올 수 있는 회차다.',
+   kw:['동묘','야장','리액션','숏폼'],
+   shots:['assets/story-ref-b.webp','assets/ep5-ref-b.png']},
+  {ep:'EP.6',tag:'INTERVIEW',icon:'🎤',title:'현식, 친구와 로드인터뷰를 해보다',
+   titleHtml:'현식, 친구와 <span class="ep-mob-title-br"></span>로드인터뷰를 해보다',
+   body:'현식이 혼자 또는 친구/멤버와 함께 사람들을 만나보는 회차. “저 혹시 아이돌처럼 보이나요?”, “XODIAC 아세요?” 같은 질문으로 대중 반응을 자연스럽게 끌어낸다. 함께하는 인물이 있으면 현식의 편한 모습과 관계성도 살아난다.',
+   kw:['로드인터뷰','친구','멤버','대중반응'],
+   shots:['assets/story-ref-a.webp','assets/ep6-ref-b.png']},
+  {ep:'EP.7',tag:'BASEBALL',icon:'⚾',title:'현식, 야구장에 가서 하루를 즐기다',
+   body:'야구장에 가서 응원, 먹거리, 관중 분위기, 현장 리액션을 담는 회차. 현식이 일상적인 대중 공간 속에 섞이는 모습이 잘 보일 수 있다. 응원가와 함성의 에너지를 감정 키워드로 연결해 마무리 가능하다.',
+   kw:['야구장','응원','먹거리','리액션'],
+   shots:['assets/ep7-ref-a.png','assets/ep7-ref-b.png']},
+  {ep:'EP.8',tag:'FINALE',icon:'🎙️',title:'현식, 작곡과 작사를 완성하다',
+   body:'시즌 동안 쌓아온 문장, 감정, 경험을 바탕으로 오리지널 곡을 완성하는 피날레. 작사 수업에서 시작된 흐름을 회수하고, 녹음 과정과 라이브 클립 공개까지 연결한다. ‘아이돌, 세상에 나가다 — 현식 편’의 최종 음악 IP가 완성되는 회차.',
+   kw:['작곡','작사','녹음','피날레'],
+   shots:['assets/songmaking-ref-a.webp','assets/songmaking-ref-b.webp']},
+];
+
+/* viewport height fix */
+function setVH(){
+  const h=(window.visualViewport?window.visualViewport.height:window.innerHeight)+'px';
+  document.documentElement.style.setProperty('--svh',h);
+}
+setVH();
+window.addEventListener('resize',setVH);
+if(window.visualViewport)window.visualViewport.addEventListener('resize',setVH);
+
+/* mode detection */
+const SPONSOR=/\/sponsor(\/|$)/.test(location.pathname)||
+              new URLSearchParams(location.search).get('mode')==='sponsor'||
+              location.hash==='#sponsor';
+const mtag=document.getElementById('mtag');
+if(SPONSOR){
+  mtag.textContent='SPONSOR';mtag.className='mode-tag mode-spon';
+  document.querySelectorAll('.sonly').forEach(el=>el.style.display='block');
+  document.getElementById('valSub').textContent='현식, MBC Studio 596, 그리고 브랜드에 돌아가는 가치';
+}else{
+  mtag.textContent='MANAGEMENT';mtag.className='mode-tag mode-mgmt';
+  mtag.title='기획사/MBC용';
+}
+
+/* nav */
+let slides=[],cur=0;
+const dotsEl=document.getElementById('navDots'),snumEl=document.getElementById('snum');
+const SLIDE_STORE_KEY='deckSlide:'+(SPONSOR?'sponsor':'mgmt');
+
+function saveSlidePos(i){
+  const s=slides[i];
+  if(s&&s.id)sessionStorage.setItem(SLIDE_STORE_KEY,s.id);
+}
+
+function loadSlideIndex(){
+  const id=sessionStorage.getItem(SLIDE_STORE_KEY);
+  if(!id)return 0;
+  const i=slides.findIndex(s=>s.id===id);
+  return i>=0?i:0;
+}
+
+function buildNav(){
+  slides=Array.from(document.querySelectorAll('.slide')).filter(s=>getComputedStyle(s).display!=='none');
+  dotsEl.innerHTML='';
+  slides.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='dot';
+    d.onclick=()=>goTo(i);
+    dotsEl.appendChild(d);
+  });
+}
+function updateN(i){
+  cur=i;
+  snumEl.textContent=(i+1)+' / '+slides.length;
+  document.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+  saveSlidePos(i);
+}
+function goTo(i,smooth=true){
+  if(slides[i])slides[i].scrollIntoView({behavior:smooth?'smooth':'instant',block:'start'});
+}
+
+function finishCounters(){
+  document.querySelectorAll('[data-count]').forEach(el=>{el.textContent=el.dataset.count});
+  cDone=true;
+}
+
+function restoreDeckSlide(){
+  const i=loadSlideIndex();
+  updateN(i);
+  if(i>0&&slides[i]){
+    slides[i].classList.add('on');
+    const s4i=slides.findIndex(s=>s.id==='s4');
+    if(s4i!==-1&&i>=s4i)finishCounters();
+    requestAnimationFrame(()=>{
+      slides[i].scrollIntoView({behavior:'instant',block:'start'});
+      requestAnimationFrame(()=>slides[i].scrollIntoView({behavior:'instant',block:'start'}));
+    });
+  }else if(slides[0]){
+    setTimeout(()=>slides[0].classList.add('on'),60);
+  }
+}
+
+/* intersection observer */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting&&e.intersectionRatio>0.5){
+      e.target.classList.add('on');
+      const i=slides.indexOf(e.target);
+      if(i!==-1){updateN(i);if(e.target.id==='s4')runCounters();}
+    }else{
+      e.target.classList.remove('on');
+    }
+  });
+},{threshold:0.55});
+function initObs(){slides.forEach(s=>obs.observe(s))}
+
+/* number counters */
+let cDone=false;
+function runCounters(){
+  if(cDone)return;cDone=true;
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const t=+el.dataset.count,t0=performance.now();
+    (function step(now){
+      const p=Math.min((now-t0)/900,1),e=1-Math.pow(1-p,3);
+      el.textContent=Math.round(e*t);
+      if(p<1)requestAnimationFrame(step);else el.textContent=t;
+    })(t0);
+  });
+}
+
+/* keyboard */
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'||e.key==='PageDown'){e.preventDefault();if(cur<slides.length-1)goTo(cur+1)}
+  else if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();if(cur>0)goTo(cur-1)}
+});
+
+/* touch swipe */
+let ty=0,tt=0;
+const deckEl=document.getElementById('deck');
+deckEl.addEventListener('touchstart',e=>{ty=e.touches[0].clientY;tt=Date.now()},{passive:true});
+deckEl.addEventListener('touchend',e=>{
+  const dy=ty-e.changedTouches[0].clientY,dt=Date.now()-tt;
+  if(Math.abs(dy)>38&&dt<380){
+    if(dy>0&&cur<slides.length-1)goTo(cur+1);
+    else if(dy<0&&cur>0)goTo(cur-1);
+  }
+},{passive:true});
+
+/* episode modal */
+function openEp(i){
+  const e=EPS[i];
+  document.getElementById('em-ep').textContent=e.ep;
+  document.getElementById('em-tag').textContent=e.tag;
+  document.getElementById('em-icon').textContent=e.icon;
+  const titleEl=document.getElementById('em-title');
+  if(e.titleHtml)titleEl.innerHTML=e.titleHtml;
+  else titleEl.textContent=e.title;
+  document.getElementById('em-body').textContent=e.body;
+  const shotsEl=document.getElementById('em-shots');
+  if(e.shots&&e.shots.length){
+    const refs=e.shots.map((src,j)=>
+      `<div class="emodal-ref${j?' ref-b':''}"><img src="${src}" alt="" loading="lazy" decoding="async"></div>`
+    ).join('');
+    shotsEl.innerHTML=refs;
+  }else{
+    shotsEl.innerHTML='';
+  }
+  document.getElementById('em-kw').innerHTML=(e.kw||[]).map(k=>`<span>${k}</span>`).join('');
+  document.getElementById('emodal').classList.add('open');
+}
+function closeEp(){document.getElementById('emodal').classList.remove('open')}
+function closeEpModal(e){if(e.target===document.getElementById('emodal'))closeEp()}
+
+/* init */
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+buildNav();initObs();restoreDeckSlide();
+</script>
+</body>
+</html>

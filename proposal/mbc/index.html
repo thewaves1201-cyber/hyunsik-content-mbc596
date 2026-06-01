@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>MBC용 — 아이돌, 세상에 나가다</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+        background: #1a1a2e;
+        color: #fff;
+      }
+      .box {
+        padding: 16px 18px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.08);
+        font-weight: 700;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">MBC용 페이지를 여는 중…</div>
+    <script>
+      // /mbc 는 /management 와 동일(기획사/MBC용, 스폰서 섹션 없음)
+      fetch("../index.html", { cache: "no-store" })
+        .then((r) => {
+          if (!r.ok) throw new Error("load failed");
+          return r.text();
+        })
+        .then((html) => {
+          document.open();
+          document.write(html);
+          document.close();
+        })
+        .catch(() => {
+          document.querySelector(".box").textContent = "로드 실패 — proposal/index.html 경로를 확인해주세요.";
+        });
+    </script>
+  </body>
+</html>
