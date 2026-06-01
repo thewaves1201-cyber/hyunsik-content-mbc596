@@ -192,6 +192,7 @@ a{text-decoration:none;color:inherit}
 .mtitle .hl{-webkit-text-stroke:2px var(--b);color:var(--yellow)}
 .hname{font-size:clamp(1rem,3.2vw,1.6rem);font-weight:900;color:var(--pink);margin-bottom:0}
 .hdesc{font-size:clamp(.78rem,1.8vw,.92rem);color:var(--gray);line-height:1.65;margin-bottom:0}
+.hdesc-sub{display:block}
 .hero-spec{
   font-size:clamp(.68rem,1.6vw,.78rem);font-weight:800;color:var(--dark);
   letter-spacing:.04em;padding:6px 0;
@@ -856,7 +857,12 @@ a{text-decoration:none;color:inherit}
   #s1 .s1-top,#s1 .s1-head,#s1 .s1-mid,#s1 .s1-foot{gap:8px}
   #s1 .s1-mid{gap:10px}
   #s1 .s1-foot{margin-top:2px}
-  #s1 .hdesc{max-width:280px}
+  #s1 .hdesc{max-width:none;width:100%}
+  #s1 .hdesc-sub{
+    white-space:nowrap;
+    font-size:clamp(.58rem,2.85vw,.76rem);
+    letter-spacing:-.02em;
+  }
   #s1 .hero-quote{max-width:300px}
   #s1 .f-st1,#s1 .f-st2{display:none}
   #s1 .f-note{top:9%;left:3%;font-size:1rem;opacity:.55}
@@ -932,6 +938,7 @@ a{text-decoration:none;color:inherit}
   #s1 .inner{gap:12px;max-width:min(320px,84vw)}
   #s1 .s1-top,#s1 .s1-head,#s1 .s1-mid,#s1 .s1-foot{gap:7px}
   #s1 .s1-mid{gap:8px}
+  #s1 .hdesc-sub{font-size:clamp(.54rem,2.7vw,.7rem);letter-spacing:-.03em}
   .hero-project{font-size:.56rem}
   #s1 .scroll-hint{font-size:.65rem}
   #s2 .cbig{font-size:clamp(1.48rem,5.4vw,1.9rem)}
@@ -978,7 +985,7 @@ a{text-decoration:none;color:inherit}
         <p class="hname ai">첫 번째 편: XODIAC 현식 편</p>
       </div>
       <div class="s1-mid">
-        <p class="hdesc ai">첫 번째 아이돌, XODIAC 현식<br>무대 밖에서 경험하고, 이야기와 노래로 남기는 3개월의 기록</p>
+        <p class="hdesc ai">첫 번째 아이돌, XODIAC 현식<br><span class="hdesc-sub">무대 밖에서 경험하고, 이야기와 노래로 남기는 3개월의 기록</span></p>
         <p class="hero-spec ai">8 Episodes · 3 Months · 3 Original Songs</p>
         <p class="hero-quote ai">현식이 세상 밖에서 만난 순간들이,<br>하나의 음악이 됩니다</p>
       </div>
