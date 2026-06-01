@@ -4,6 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
+<!-- /proposal/management·sponsor 등 하위 경로에서도 이미지가 proposal/ 기준으로 로드되게 -->
+<script>
+(function () {
+  var path = location.pathname;
+  var base;
+  if (path.indexOf("/proposal") !== -1) {
+    var i = path.indexOf("/proposal");
+    base = path.slice(0, i + "/proposal".length) + "/";
+  } else {
+    base = path.replace(/\/(management|mbc|sponsor)\/?$/, "/");
+    if (!base.endsWith("/")) base += "/";
+    if (base === "") base = "/";
+  }
+  var el = document.createElement("base");
+  el.href = base;
+  document.head.appendChild(el);
+})();
+</script>
 <title>아이돌, 세상에 나가다 — MBC Studio 596</title>
 <style>
 /* ==================== TOKENS ==================== */
