@@ -11,6 +11,8 @@ hyunsik-content-mbc596/
 ├── assets/                    ← 기존 에셋 (favicon, og 이미지 등)
 └── proposal/                  ← 신규 「아이돌, 세상에 나가다」 기획안 (03 claude_website)
     ├── index.html
+    ├── hero-cutout.png, hero-cutout-2.png
+    ├── assets/                ← 이미지 전부 (HTML에서 참조)
     ├── management/index.html  ← URL용 로더 (내용은 index.html)
     ├── mbc/index.html         ← management 와 동일
     └── sponsor/index.html     ← 스폰서/PPL용 (sponsor 모드)
@@ -35,7 +37,7 @@ hyunsik-content-mbc596/
 2. **배포용 복사** (레포에 올릴 때):
 
 ```bash
-cp "03 claude_website/index.html" "01 website/proposal/index.html"
+./sync-proposal-to-deploy.sh   # index.html + assets + hero 이미지 동기화
 ```
 
 3. 로컬 서버 (프로젝트 루트에서):

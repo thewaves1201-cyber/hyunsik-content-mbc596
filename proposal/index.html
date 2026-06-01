@@ -30,6 +30,11 @@
   if (path.indexOf("/proposal") !== -1) {
     var i = path.indexOf("/proposal");
     base = path.slice(0, i + "/proposal".length) + "/";
+  } else if (/\.html?$/i.test(path)) {
+    /* 로컬 /index.html 등 — 파일명 제거 후 디렉터리 기준 (index.html/assets 404 방지) */
+    base = path.replace(/[^/]+$/, "");
+    if (!base.endsWith("/")) base += "/";
+    if (base === "") base = "/";
   } else {
     base = path.replace(/\/(management|mbc|sponsor)\/?$/, "/");
     if (!base.endsWith("/")) base += "/";
@@ -92,6 +97,18 @@ a{text-decoration:none;color:inherit}
 }
 .topbar-brand{font-size:.72rem;font-weight:700;color:rgba(255,255,255,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:55%}
 .topbar-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+/* KO / ENG 토글 */
+.lang-toggle{
+  display:inline-flex;padding:2px;border-radius:999px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+}
+.lang-btn{
+  border:none;background:transparent;color:rgba(255,255,255,.45);
+  font-size:.6rem;font-weight:800;letter-spacing:.06em;
+  padding:4px 8px;border-radius:999px;cursor:pointer;line-height:1;
+  font-family:inherit;
+}
+.lang-btn.on{background:var(--yellow);color:var(--dark);box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .slide-num{font-size:.65rem;color:rgba(255,255,255,.3)}
 .mode-tag{padding:2px 9px;border-radius:12px;font-size:.62rem;font-weight:800;letter-spacing:.05em}
 .mode-mgmt{background:var(--blue);color:#fff}
@@ -970,8 +987,12 @@ a{text-decoration:none;color:inherit}
 
 <!-- TOP BAR -->
 <div class="topbar">
-  <span class="topbar-brand">Studio 596 Original · 아이돌, 세상에 나가다</span>
+  <span class="topbar-brand" id="topbarBrand">Studio 596 Original · 아이돌, 세상에 나가다</span>
   <div class="topbar-right">
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button type="button" class="lang-btn on" data-lang="ko" id="langKo">KO</button>
+      <button type="button" class="lang-btn" data-lang="en" id="langEn">ENG</button>
+    </div>
     <span class="slide-num" id="snum">1 / 9</span>
     <span class="mode-tag" id="mtag"></span>
   </div>
@@ -1384,47 +1405,8 @@ a{text-decoration:none;color:inherit}
   </div>
 </div>
 
+<script src="assets/i18n.js"></script>
 <script>
-const EPS=[
-  {ep:'EP.1',tag:'START',icon:'🌞',title:'현식과 첫 번째 자기소개팅',
-   titleHtml:'현식과 첫 번째 <span class="ep-mob-title-br"></span>자기소개팅',
-   body:'현식이 세상 밖으로 처음 나가는 오프닝 회차. 딱딱한 프로필 소개가 아니라, ‘처음 만나는 사람과 소개팅하듯’ 원현식을 알아가는 시간으로 구성한다. 가볍게 걷고, 묻고, 답하고, 웃으면서 현식이 어떤 사람인지 자연스럽게 보여주고, 앞으로의 여정을 예고한다.',
-   kw:['출발','만남','자기소개','대화'],
-   shots:['assets/ep1-ref-a.png','assets/ep1-ref-b.png']},
-  {ep:'EP.2',tag:'ROAD',icon:'🚗',title:'현식, 운전대를 잡고 추억여행을 떠나다',
-   titleHtml:'현식, 운전대를 잡고 <span class="ep-desk-title-br"></span>추억여행을 떠나다',
-   body:'현식이 직접 운전대를 잡고, 자신에게 의미 있는 장소로 이동하는 회차. 어릴 적 동네, 연습생 시절의 기억, 처음 노래를 좋아하게 된 순간 등 ‘초심’과 연결한다. 이후 회차에서도 운전은 콘텐츠의 기본 이동 장치로 활용 가능하다.',
-   kw:['운전','드라이브','추억','초심'],
-   shots:['assets/outdoor-ref-a.webp','assets/outdoor-ref-b.webp']},
-  {ep:'EP.3',tag:'LYRIC',icon:'✍️',title:'이야기를 작사로 써내보다',
-   body:'현식이 본격적으로 자기 이야기를 노래로 남기기 위한 첫 단계. 작사가 또는 프로듀서와 함께 ‘내 이야기를 작사로 써내보는 법’을 배우는 회차다. 이후 모든 회차에서 나오는 감정과 문장을 음악으로 연결하기 위한 장치가 된다.',
-   kw:['작사','문장','감정','음악'],
-   shots:['assets/ep3-ref-a.png','assets/ep3-ref-b.png']},
-  {ep:'EP.4',tag:'CAMP',icon:'⛺',title:'현식, 캠핑 가서 사진으로 하루를 남기다',
-   titleHtml:'현식, 캠핑 가서 사진으로 <span class="ep-desk-title-br"></span>하루를 남기다',
-   body:'현식이 해보고 싶어 했던 캠핑을 중심으로 한 회차. 캠핑장 또는 피크닉 공간에서 쉬고, 먹고, 대화하고, 사진으로 그날의 장면을 기록한다. 밤에는 캠핑장 라이브 또는 어쿠스틱 라이브로 감정적 엔딩을 구성한다.',
-   kw:['캠핑','사진','쉼','밤'],
-   shots:['assets/ep4-ref-a.png','assets/ep4-ref-b.png']},
-  {ep:'EP.5',tag:'STREET',icon:'🧥',title:'현식, 동묘를 걷고 야장에 앉아보다',
-   titleHtml:'현식, 동묘를 걷고 <span class="ep-mob-title-br"></span>야장에 앉아보다',
-   body:'동묘에서 옷, 물건, 거리 분위기를 구경하며 현식의 자연스러운 리액션을 보여주는 회차. 후반부는 야장으로 이동해 편하게 먹고 이야기하는 구성. 예능감, 대중성, 숏폼 포인트가 가장 잘 나올 수 있는 회차다.',
-   kw:['동묘','야장','리액션','숏폼'],
-   shots:['assets/story-ref-b.webp','assets/ep5-ref-b.png']},
-  {ep:'EP.6',tag:'INTERVIEW',icon:'🎤',title:'현식, 친구와 로드인터뷰를 해보다',
-   titleHtml:'현식, 친구와 <span class="ep-mob-title-br"></span>로드인터뷰를 해보다',
-   body:'현식이 혼자 또는 친구/멤버와 함께 사람들을 만나보는 회차. “저 혹시 아이돌처럼 보이나요?”, “XODIAC 아세요?” 같은 질문으로 대중 반응을 자연스럽게 끌어낸다. 함께하는 인물이 있으면 현식의 편한 모습과 관계성도 살아난다.',
-   kw:['로드인터뷰','친구','멤버','대중반응'],
-   shots:['assets/story-ref-a.webp','assets/ep6-ref-b.png']},
-  {ep:'EP.7',tag:'BASEBALL',icon:'⚾',title:'현식, 야구장에 가서 하루를 즐기다',
-   body:'야구장에 가서 응원, 먹거리, 관중 분위기, 현장 리액션을 담는 회차. 현식이 일상적인 대중 공간 속에 섞이는 모습이 잘 보일 수 있다. 응원가와 함성의 에너지를 감정 키워드로 연결해 마무리 가능하다.',
-   kw:['야구장','응원','먹거리','리액션'],
-   shots:['assets/ep7-ref-a.png','assets/ep7-ref-b.png']},
-  {ep:'EP.8',tag:'FINALE',icon:'🎙️',title:'현식, 작곡과 작사를 완성하다',
-   body:'시즌 동안 쌓아온 문장, 감정, 경험을 바탕으로 오리지널 곡을 완성하는 피날레. 작사 수업에서 시작된 흐름을 회수하고, 녹음 과정과 라이브 클립 공개까지 연결한다. ‘아이돌, 세상에 나가다 — 현식 편’의 최종 음악 IP가 완성되는 회차.',
-   kw:['작곡','작사','녹음','피날레'],
-   shots:['assets/songmaking-ref-a.webp','assets/songmaking-ref-b.webp']},
-];
-
 /* viewport height fix */
 function setVH(){
   const h=(window.visualViewport?window.visualViewport.height:window.innerHeight)+'px';
@@ -1440,13 +1422,9 @@ const SPONSOR=/\/sponsor(\/|$)/.test(location.pathname)||
               location.hash==='#sponsor';
 const mtag=document.getElementById('mtag');
 if(SPONSOR){
-  mtag.textContent='SPONSOR';mtag.className='mode-tag mode-spon';
   document.querySelectorAll('.sonly').forEach(el=>el.style.display='block');
-  document.getElementById('valSub').textContent='현식, MBC Studio 596, 그리고 브랜드에 돌아가는 가치';
-}else{
-  mtag.textContent='MANAGEMENT';mtag.className='mode-tag mode-mgmt';
-  mtag.title='기획사/MBC용';
 }
+SiteI18n.initLangToggle(SPONSOR);
 
 /* nav */
 let slides=[],cur=0;
@@ -1554,7 +1532,7 @@ deckEl.addEventListener('touchend',e=>{
 
 /* episode modal */
 function openEp(i){
-  const e=EPS[i];
+  const e=SiteI18n.getEps()[i];
   document.getElementById('em-ep').textContent=e.ep;
   document.getElementById('em-tag').textContent=e.tag;
   document.getElementById('em-icon').textContent=e.icon;
